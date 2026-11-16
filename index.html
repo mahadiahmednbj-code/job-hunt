@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="monetag" content="1fe17f144ba449cd478b39e7d223b6a3">
     <title>Job Hunt — Find Freelance Jobs from 100+ Global Platforms</title>
     <!-- Adsterra / Ad Codes Integration -->
     <script data-cfasync="false" src="https://bicea.org/14/3ac33542d6de197c408b237bed21e045"></script>
@@ -103,7 +104,6 @@
             <div class="platform-card"><a href="https://hubstafftalent.net" target="_blank" onclick="triggerDirectAd(event)">Hubstaff Talent</a></div>
             <div class="platform-card"><a href="https://www.truelancer.com" target="_blank" onclick="triggerDirectAd(event)">Truelancer</a></div>
             <div class="platform-card"><a href="https://www.workana.com" target="_blank" onclick="triggerDirectAd(event)">Workana</a></div>
-            <!-- Expanded to 100+ category simulated access -->
             <div class="platform-card"><a href="https://www.problogger.com/jobs" target="_blank" onclick="triggerDirectAd(event)">ProBlogger</a></div>
             <div class="platform-card"><a href="https://www.craigslist.org" target="_blank" onclick="triggerDirectAd(event)">Craigslist Gigs</a></div>
         </div>
@@ -159,13 +159,10 @@
     </footer>
 
     <script>
-        // Direct link popup trigger on job apply or platform click to maximize earnings instantly
         function triggerDirectAd(event) {
-            // Opens direct link in background or seamless interaction
             window.open("https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00", "_blank");
         }
 
-        // Search & Filter Logic
         function filterJobs() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let category = document.getElementById('categorySelect').value;
