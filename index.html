@@ -3,61 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Hunt — Find Freelance Jobs from 100+ Global Platforms</title>
+    <title>Job Hunt — Search Freelance Jobs Across 100+ Global Platforms</title>
+    <meta name="description" content="Find freelance and remote jobs across 100+ global platforms including Upwork, Fiverr, Freelancer, LinkedIn, and more.">
     
-    <!-- Google AdSense Account & Verification Meta Tag -->
-    <meta name="google-adsense-account" content="ca-pub-4306254455862264">
-
-    <!-- Google AdSense Auto Ads Script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264"
-     crossorigin="anonymous"></script>
+    <!-- Website Favicon & Search Preview Logo (Glass Magnifying Glass) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23050811'/%3E%3Cdefs%3E%3ClinearGradient id='glass' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e0f2fe'/%3E%3Cstop offset='50%25' stop-color='%237dd3fc'/%3E%3Cstop offset='100%25' stop-color='%2338bdf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='42' cy='42' r='24' fill='none' stroke='url(%23glass)' stroke-width='7'/%3E%3Ccircle cx='42' cy='42' r='19' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.6'/%3E%3Cline x1='60' y1='60' x2='82' y2='82' stroke='url(%23glass)' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='61' y1='59' x2='80' y2='78' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' opacity='0.7'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta property="og:title" content="Job Hunt — 100+ Global Freelance Platforms">
+    <meta property="og:description" content="Search jobs from Upwork, Fiverr, Freelancer, LinkedIn and 100+ global platforms in one place.">
+    <meta property="og:image" content="logo.png">
 
     <!-- Adsterra Social Bar / Pop-under Code -->
     <script data-cfasync="false" src="https://bicea.org/14/3ac33542d6de197c408b237bed21e045"></script>
 
     <style>
         :root {
-            --primary: #0070f3;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --primary: #38bdf8;
+            --primary-dark: #0284c7;
+            --bg: #070b14;
+            --card-bg: #111827;
+            --card-hover: #1e293b;
             --text: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #10b981;
+            --border: #1f2937;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
-        header { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px; margin-bottom: 30px; border: 1px solid #334155; }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #38bdf8; }
-        p.tagline { color: var(--text-muted); font-size: 1.1rem; }
-        
-        .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: var(--card-bg); border-radius: 8px; border: 1px solid #334155; overflow-x: auto; }
-        
-        .filters { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 30px; }
-        select, input { padding: 12px 20px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: var(--text); font-size: 1rem; outline: none; }
-        select:focus, input:focus { border-color: var(--primary); }
-        
-        .platforms-section { margin-bottom: 40px; }
-        h2 { font-size: 1.5rem; margin-bottom: 15px; border-left: 4px solid var(--accent); padding-left: 10px; }
-        .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .platform-card { background: var(--card-bg); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #334155; transition: 0.3s; }
-        .platform-card:hover { transform: translateY(-3px); border-color: var(--primary); }
-        .platform-card a { color: #38bdf8; text-decoration: none; font-weight: 600; display: block; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 15px; }
+        .container { max-width: 1280px; margin: 0 auto; }
 
-        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .job-card { background: var(--card-bg); padding: 20px; border-radius: 10px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; }
-        .job-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text); }
-        .job-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
-        .btn-apply { display: inline-block; background: var(--primary); color: white; padding: 10px 15px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: bold; transition: 0.2s; }
+        /* Header with Glass Magnifying Logo */
+        header {
+            text-align: center;
+            padding: 35px 20px;
+            background: radial-gradient(circle at top, #172554 0%, #070b14 75%);
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid #1e3a8a;
+        }
+        .brand-box { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+        .brand-logo {
+            width: 54px; height: 54px;
+            background: #020617;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid #38bdf844;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+        }
+        h1 { font-size: 2.4rem; background: linear-gradient(to right, #e0f2fe, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        p.tagline { color: var(--text-muted); font-size: 1.05rem; max-width: 650px; margin: 0 auto; }
+
+        /* Ad Container */
+        .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
+
+        /* Advanced Search & Platform Filter Bar */
+        .search-panel {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #334155;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .search-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 1.2fr auto;
+            gap: 12px;
+        }
+        @media (max-width: 900px) { .search-grid { grid-template-columns: 1fr; } }
+
+        input, select {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 10px;
+            border: 1px solid #374151;
+            background: #0f172a;
+            color: var(--text);
+            font-size: 0.98rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15); }
+
+        .btn-search {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .btn-search:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+        /* Direct Platform Search Bar */
+        .direct-platform-bar {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #1f2937;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+        .btn-direct-go {
+            background: #10b981;
+            color: #022c22;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        .btn-direct-go:hover { background: #34d399; }
+
+        /* Section Titles */
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        h2 { font-size: 1.4rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+        .badge-count { background: #1e293b; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid #334155; }
+
+        /* Jobs Grid */
+        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; margin-bottom: 40px; }
+        .job-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.25s;
+        }
+        .job-card:hover { border-color: var(--primary); transform: translateY(-3px); background: var(--card-hover); }
+        .platform-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .job-card h3 { font-size: 1.15rem; margin-bottom: 8px; color: #f1f5f9; }
+        .job-meta { font-size: 0.85rem; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+        .job-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; }
+        .btn-apply {
+            display: block;
+            background: #1d4ed8;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: 0.2s;
+        }
         .btn-apply:hover { background: #2563eb; }
-        
-        footer { text-align: center; padding: 30px; color: var(--text-muted); margin-top: 50px; border-top: 1px solid #334155; }
+
+        /* 100+ Platforms Directory */
+        .platform-filter-input { max-width: 320px; padding: 9px 14px; font-size: 0.9rem; }
+        .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; margin-bottom: 40px; }
+        .platform-card {
+            background: var(--card-bg);
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+        }
+        .platform-card:hover { border-color: var(--primary); transform: translateY(-2px); background: var(--card-hover); }
+        .platform-card a { color: #e2e8f0; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: block; }
+        .platform-card span { display: block; font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+
+        footer { text-align: center; padding: 30px 15px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 30px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
+<div class="container">
 
     <header>
-        <h1>Job Hunt</h1>
-        <p class="tagline">Your Gateway to 100+ Global Freelance & Remote Job Platforms</p>
+        <div class="brand-box">
+            <div class="brand-logo">
+                <!-- Glass Magnifying Glass Icon -->
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e0f2fe"/>
+                            <stop offset="50%" stop-color="#7dd3fc"/>
+                            <stop offset="100%" stop-color="#0284c7"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="42" cy="42" r="26" stroke="url(#lensGrad)" stroke-width="8"/>
+                    <circle cx="42" cy="42" r="20" stroke="#ffffff" stroke-width="1.5" opacity="0.65"/>
+                    <line x1="61" y1="61" x2="86" y2="86" stroke="url(#lensGrad)" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="62" y1="60" x2="84" y2="82" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+                </svg>
+            </div>
+            <h1>Job Hunt</h1>
+        </div>
+        <p class="tagline">Search & Discover Freelance, Remote, and Contract Jobs Across 100+ Global Platforms</p>
     </header>
 
     <!-- Top Banner Ad (728x90) -->
@@ -74,79 +228,126 @@
         <script src="https://bicea.org/22/f29d4ab1a61022d8cdd70229a4a2eb07"></script>
     </div>
 
-    <!-- Filter Section -->
-    <div class="filters">
-        <input type="text" id="searchInput" placeholder="Search skills (e.g. Video Editing, Anime, Web)..." onkeyup="filterJobs()">
-        <select id="categorySelect" onchange="filterJobs()">
-            <option value="">All Categories</option>
-            <option value="video">Video Editing & Animation</option>
-            <option value="design">Graphic Design & UI/UX</option>
-            <option value="dev">Web & App Development</option>
-            <option value="writing">Content Writing & Translation</option>
-            <option value="marketing">Digital Marketing & SEO</option>
-            <option value="ai">AI & Machine Learning</option>
-        </select>
-    </div>
+    <!-- Search & Platform Selector Panel -->
+    <div class="search-panel">
+        <div class="search-grid">
+            <input type="text" id="searchInput" placeholder="Search job title or skill (e.g. Video Editing, Thumbnail, Web, SEO)..." onkeyup="filterJobs()">
+            
+            <select id="platformSelect" onchange="filterJobs()">
+                <option value="">All Platforms (100+)</option>
+                <option value="Upwork">Upwork</option>
+                <option value="Fiverr">Fiverr</option>
+                <option value="Freelancer">Freelancer.com</option>
+                <option value="LinkedIn">LinkedIn Jobs</option>
+                <option value="PeoplePerHour">PeoplePerHour</option>
+                <option value="Guru">Guru</option>
+                <option value="Toptal">Toptal</option>
+                <option value="RemoteOK">RemoteOK</option>
+                <option value="WeWorkRemotely">WeWorkRemotely</option>
+                <option value="Behance">Behance</option>
+                <option value="Dribbble">Dribbble</option>
+                <option value="99designs">99designs</option>
+                <option value="Indeed">Indeed</option>
+                <option value="Wellfound">Wellfound</option>
+                <option value="Truelancer">Truelancer</option>
+                <option value="Workana">Workana</option>
+            </select>
 
-    <!-- Top Connected Platforms -->
-    <div class="platforms-section">
-        <h2>Top 100+ Connected Platforms</h2>
-        <div class="platform-grid">
-            <div class="platform-card"><a href="https://www.upwork.com" target="_blank" onclick="triggerDirectAd(event)">Upwork</a></div>
-            <div class="platform-card"><a href="https://www.fiverr.com" target="_blank" onclick="triggerDirectAd(event)">Fiverr</a></div>
-            <div class="platform-card"><a href="https://www.freelancer.com" target="_blank" onclick="triggerDirectAd(event)">Freelancer.com</a></div>
-            <div class="platform-card"><a href="https://www.linkedin.com/jobs" target="_blank" onclick="triggerDirectAd(event)">LinkedIn Jobs</a></div>
-            <div class="platform-card"><a href="https://www.guru.com" target="_blank" onclick="triggerDirectAd(event)">Guru</a></div>
-            <div class="platform-card"><a href="https://www.peopleperhour.com" target="_blank" onclick="triggerDirectAd(event)">PeoplePerHour</a></div>
-            <div class="platform-card"><a href="https://www.toptal.com" target="_blank" onclick="triggerDirectAd(event)">Toptal</a></div>
-            <div class="platform-card"><a href="https://99designs.com" target="_blank" onclick="triggerDirectAd(event)">99designs</a></div>
-            <div class="platform-card"><a href="https://remoteok.com" target="_blank" onclick="triggerDirectAd(event)">RemoteOK</a></div>
-            <div class="platform-card"><a href="https://weworkremotely.com" target="_blank" onclick="triggerDirectAd(event)">WeWorkRemotely</a></div>
-            <div class="platform-card"><a href="https://www.behance.net" target="_blank" onclick="triggerDirectAd(event)">Behance</a></div>
-            <div class="platform-card"><a href="https://dribbble.com" target="_blank" onclick="triggerDirectAd(event)">Dribbble</a></div>
-            <div class="platform-card"><a href="https://www.flexjobs.com" target="_blank" onclick="triggerDirectAd(event)">FlexJobs</a></div>
-            <div class="platform-card"><a href="https://www.simplyhired.com" target="_blank" onclick="triggerDirectAd(event)">SimplyHired</a></div>
-            <div class="platform-card"><a href="https://www.indeed.com" target="_blank" onclick="triggerDirectAd(event)">Indeed</a></div>
-            <div class="platform-card"><a href="https://www.glassdoor.com" target="_blank" onclick="triggerDirectAd(event)">Glassdoor</a></div>
-            <div class="platform-card"><a href="https://wellfound.com" target="_blank" onclick="triggerDirectAd(event)">Wellfound (AngelList)</a></div>
-            <div class="platform-card"><a href="https://hubstafftalent.net" target="_blank" onclick="triggerDirectAd(event)">Hubstaff Talent</a></div>
-            <div class="platform-card"><a href="https://www.truelancer.com" target="_blank" onclick="triggerDirectAd(event)">Truelancer</a></div>
-            <div class="platform-card"><a href="https://www.workana.com" target="_blank" onclick="triggerDirectAd(event)">Workana</a></div>
-            <div class="platform-card"><a href="https://www.problogger.com/jobs" target="_blank" onclick="triggerDirectAd(event)">ProBlogger</a></div>
-            <div class="platform-card"><a href="https://www.craigslist.org" target="_blank" onclick="triggerDirectAd(event)">Craigslist Gigs</a></div>
+            <select id="categorySelect" onchange="filterJobs()">
+                <option value="">All Categories</option>
+                <option value="video">Video Editing & Animation</option>
+                <option value="design">Graphic Design & Thumbnails</option>
+                <option value="dev">Web & Mobile App Dev</option>
+                <option value="marketing">YouTube SEO & Marketing</option>
+                <option value="writing">Content Writing & Copy</option>
+                <option value="ai">AI & Prompt Engineering</option>
+            </select>
+
+            <button class="btn-search" onclick="filterJobs()">Find Jobs</button>
+        </div>
+
+        <!-- Direct Live Search on Selected Platform -->
+        <div class="direct-platform-bar">
+            <span>Want live results directly from a specific platform? Select a platform above and click:</span>
+            <button class="btn-direct-go" onclick="searchOnExternalPlatform()">Search Directly on Selected Platform ↗</button>
         </div>
     </div>
 
-    <!-- Live Job Recommendations Feed -->
-    <div class="platforms-section">
-        <h2>Smart Job Suggestions For You</h2>
-        <div class="jobs-grid" id="jobContainer">
-            <div class="job-card" data-category="video" data-skill="video editing anime amv">
-                <div>
-                    <h3>Short-Form Video Editor / Anime AMV Creator</h3>
-                    <p>Platform: Upwork & Fiverr Aggregated • Budget: $50 - $200</p>
-                    <p>Looking for a skilled short-form video editor to create engaging anime AMVs with phonk/funk sync.</p>
-                </div>
-                <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">Apply Now</a>
+    <!-- Filtered Job Listings -->
+    <div class="section-header">
+        <h2>Latest Matching Jobs</h2>
+        <span class="badge-count" id="jobCount">Showing All Jobs</span>
+    </div>
+
+    <div class="jobs-grid" id="jobContainer">
+        <div class="job-card" data-platform="Upwork" data-category="video" data-skill="video editing anime amv shorts reels">
+            <div>
+                <span class="platform-tag">Upwork</span>
+                <h3>Short-Form Video Editor (Reels, Shorts & Anime Edits)</h3>
+                <div class="job-meta">Budget: $50 - $250 • Fixed / Hourly</div>
+                <p>Looking for a creative short-form editor skilled in fast cuts, beat sync, and high-retention transitions.</p>
             </div>
-            <div class="job-card" data-category="design" data-skill="graphic design thumbnail 4k">
-                <div>
-                    <h3>YouTube Thumbnail Designer (4K/8K Quality)</h3>
-                    <p>Platform: Behance & Dribbble • Budget: $30 / Video</p>
-                    <p>Need high-converting, eye-catching gaming and anime thumbnails for top channels.</p>
-                </div>
-                <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">Apply Now</a>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on Upwork</a>
+        </div>
+
+        <div class="job-card" data-platform="Fiverr" data-category="design" data-skill="youtube thumbnail graphic design 4k">
+            <div>
+                <span class="platform-tag">Fiverr</span>
+                <h3>High-CTR YouTube Thumbnail Designer</h3>
+                <div class="job-meta">Rate: $20 - $50 per Thumbnail</div>
+                <p>Need bold, high-contrast gaming and entertainment thumbnails delivered in crisp 4K resolution.</p>
             </div>
-            <div class="job-card" data-category="dev" data-skill="mobile app android flutter">
-                <div>
-                    <h3>Android Mobile App Developer (Flutter/VS Code)</h3>
-                    <p>Platform: Freelancer.com • Budget: $300 - $800</p>
-                    <p>Build and fix cross-platform mobile application modules with ad unit integrations.</p>
-                </div>
-                <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">Apply Now</a>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on Fiverr</a>
+        </div>
+
+        <div class="job-card" data-platform="Freelancer" data-category="dev" data-skill="android mobile app flutter web developer">
+            <div>
+                <span class="platform-tag">Freelancer.com</span>
+                <h3>Mobile App & Web Frontend Developer</h3>
+                <div class="job-meta">Budget: $250 - $750 • Fixed Price</div>
+                <p>Build responsive web apps and Android mobile interfaces with clean UI and ad integrations.</p>
             </div>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on Freelancer</a>
+        </div>
+
+        <div class="job-card" data-platform="LinkedIn" data-category="marketing" data-skill="youtube seo social media manager growth">
+            <div>
+                <span class="platform-tag">LinkedIn</span>
+                <h3>YouTube Channel Manager & Video SEO Specialist</h3>
+                <div class="job-meta">Salary: $600 - $1,200 / month • Remote</div>
+                <p>Optimize video titles, tags, descriptions, and audience retention strategy for growing channels.</p>
+            </div>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on LinkedIn</a>
+        </div>
+
+        <div class="job-card" data-platform="PeoplePerHour" data-category="video" data-skill="audio sync music editing video">
+            <div>
+                <span class="platform-tag">PeoplePerHour</span>
+                <h3>Music Video & Beat-Sync Promo Editor</h3>
+                <div class="job-meta">Budget: $80 - $180 • Project</div>
+                <p>Edit dynamic promotional clips synchronized tightly to phonk, electronic, and hip-hop tracks.</p>
+            </div>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on PeoplePerHour</a>
+        </div>
+
+        <div class="job-card" data-platform="RemoteOK" data-category="ai" data-skill="ai content prompt engineering automation">
+            <div>
+                <span class="platform-tag">RemoteOK</span>
+                <h3>AI Workflow & Content Creation Specialist</h3>
+                <div class="job-meta">Rate: $25 - $45 / hr • Worldwide Remote</div>
+                <p>Use modern AI tools to streamline visual asset creation, scripting, and web prototypes.</p>
+            </div>
+            <a href="https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00" target="_blank" class="btn-apply">View & Apply on RemoteOK</a>
         </div>
     </div>
+
+    <!-- 100+ Global Platforms Directory -->
+    <div class="section-header">
+        <h2>100+ Connected Global Platforms</h2>
+        <input type="text" id="platformSearch" class="platform-filter-input" placeholder="Filter 100+ platforms by name..." onkeyup="filterPlatformDirectory()">
+    </div>
+
+    <div class="platform-grid" id="platformDirectory"></div>
 
     <!-- Mobile Banner Ad (320x50) -->
     <div class="ad-container">
@@ -163,34 +364,186 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Job Hunt. All rights reserved. Connected with 100+ Freelance Platforms.</p>
+        <p>&copy; 2026 Job Hunt. Connecting Freelancers to 100+ Global Platforms Worldwide.</p>
     </footer>
 
-    <script>
-        function triggerDirectAd(event) {
-            window.open("https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00", "_blank");
-        }
+</div>
 
-        function filterJobs() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let category = document.getElementById('categorySelect').value;
-            let cards = document.getElementsByClassName('job-card');
+<script>
+    const directAdUrl = "https://arwf.org/4/d45de4a63e5c404c0f1258732a5f0f00";
 
-            for (let i = 0; i < cards.length; i++) {
-                let text = cards[i].innerText.toLowerCase();
-                let cat = cards[i].getAttribute('data-category');
-                let skillMatch = cards[i].getAttribute('data-skill').toLowerCase();
+    // 100+ Global Freelance & Remote Job Platforms Database
+    const platforms = [
+        { name: "Upwork", cat: "General Freelance", url: "https://www.upwork.com/nx/search/jobs/?q=" },
+        { name: "Fiverr", cat: "Gig Marketplace", url: "https://www.fiverr.com/search/gigs?query=" },
+        { name: "Freelancer.com", cat: "General Freelance", url: "https://www.freelancer.com/jobs/?keyword=" },
+        { name: "LinkedIn Jobs", cat: "Professional & Remote", url: "https://www.linkedin.com/jobs/search/?keywords=" },
+        { name: "PeoplePerHour", cat: "Hourly & Project", url: "https://www.peopleperhour.com/freelance-jobs?keyword=" },
+        { name: "Guru", cat: "General Freelance", url: "https://www.guru.com/d/jobs/q/" },
+        { name: "Toptal", cat: "Top Tech & Design", url: "https://www.toptal.com" },
+        { name: "RemoteOK", cat: "Remote Jobs", url: "https://remoteok.com/remote-" },
+        { name: "WeWorkRemotely", cat: "Remote Jobs", url: "https://weworkremotely.com/remote-jobs/search?term=" },
+        { name: "Behance", cat: "Creative & Video", url: "https://www.behance.net/joblist?search=" },
+        { name: "Dribbble", cat: "UI/UX & Design", url: "https://dribbble.com/jobs?keyword=" },
+        { name: "99designs", cat: "Graphic Design", url: "https://99designs.com" },
+        { name: "Indeed", cat: "Global Job Board", url: "https://www.indeed.com/jobs?q=" },
+        { name: "Glassdoor", cat: "Company & Jobs", url: "https://www.glassdoor.com/Job/jobs.htm?sc.keyword=" },
+        { name: "Wellfound", cat: "Startup Jobs", url: "https://wellfound.com/jobs" },
+        { name: "FlexJobs", cat: "Vetted Remote", url: "https://www.flexjobs.com/search?search=" },
+        { name: "SimplyHired", cat: "Job Aggregator", url: "https://www.simplyhired.com/search?q=" },
+        { name: "Hubstaff Talent", cat: "Free Remote Agency", url: "https://hubstafftalent.net/search/jobs?search%5Bkeywords%5D=" },
+        { name: "Truelancer", cat: "Asia & Global", url: "https://www.truelancer.com/freelance-jobs?q=" },
+        { name: "Workana", cat: "International", url: "https://www.workana.com/jobs?query=" },
+        { name: "DesignCrowd", cat: "Design Contests", url: "https://www.designcrowd.com" },
+        { name: "Crowdspring", cat: "Branding & Design", url: "https://www.crowdspring.com" },
+        { name: "Envato Studio", cat: "Digital Creative", url: "https://elements.envato.com" },
+        { name: "Contra", cat: "Commission-Free", url: "https://contra.com" },
+        { name: "Malt", cat: "European Freelance", url: "https://www.malt.com" },
+        { name: "TaskRabbit", cat: "Local & Micro Tasks", url: "https://www.taskrabbit.com" },
+        { name: "SolidGigs", cat: "Curated Leads", url: "https://solidgigs.com" },
+        { name: "Working Nomads", cat: "Digital Nomad Jobs", url: "https://www.workingnomads.com/jobs" },
+        { name: "Remotive", cat: "Tech & Remote", url: "https://remotive.com" },
+        { name: "Jobspresso", cat: "Remote Careers", url: "https://jobspresso.co" },
+        { name: "JustRemote", cat: "Remote Roles", url: "https://justremote.co" },
+        { name: "DailyRemote", cat: "Work From Home", url: "https://dailyremote.com" },
+        { name: "SkipTheDrive", cat: "Remote Listings", url: "https://www.skipthedrive.com" },
+        { name: "Virtual Vocations", cat: "Telecommute", url: "https://www.virtualvocations.com" },
+        { name: "Pangaea X", cat: "Data & Analytics", url: "https://www.pangaeax.com" },
+        { name: "Kolabtree", cat: "Research & Science", url: "https://www.kolabtree.com" },
+        { name: "Catalant", cat: "Business Consulting", url: "https://gocatalant.com" },
+        { name: "Turing", cat: "Remote Developers", url: "https://www.turing.com" },
+        { name: "Arc.dev", cat: "Software Engineers", url: "https://arc.dev" },
+        { name: "Gun.io", cat: "Elite Tech", url: "https://gun.io" },
+        { name: "X-Team", cat: "Developer Teams", url: "https://x-team.com" },
+        { name: "Lemon.io", cat: "Startup Devs", url: "https://lemon.io" },
+        { name: "Codeable", cat: "WordPress Experts", url: "https://www.codeable.io" },
+        { name: "Gigster", cat: "Software Projects", url: "https://gigster.com" },
+        { name: "Hired", cat: "Tech Talent", url: "https://hired.com" },
+        { name: "Dice", cat: "IT & Engineering", url: "https://www.dice.com" },
+        { name: "Authentic Jobs", cat: "Web & Creative", url: "https://authenticjobs.com" },
+        { name: "Krop", cat: "Creative & Tech", url: "https://www.krop.com" },
+        { name: "Coroflot", cat: "Design Jobs", url: "https://www.coroflot.com/jobs" },
+        { name: "AIGA Design Jobs", cat: "Creative Industry", url: "https://designjobs.aiga.org" },
+        { name: "Stage 32", cat: "Film & Video Editing", url: "https://www.stage32.com" },
+        { name: "Mandy", cat: "Video & Production", url: "https://www.mandy.com" },
+        { name: "ProductionHUB", cat: "Video Crew & Editors", url: "https://www.productionhub.com" },
+        { name: "Voices.com", cat: "Voice Over & Audio", url: "https://www.voices.com" },
+        { name: "Voice123", cat: "Audio Production", url: "https://voice123.com" },
+        { name: "Bunny Studio", cat: "Video, Audio & Design", url: "https://bunnystudio.com" },
+        { name: "SoundBetter", cat: "Music & Mixing", url: "https://soundbetter.com" },
+        { name: "AirGigs", cat: "Audio & Session", url: "https://www.airgigs.com" },
+        { name: "ProBlogger", cat: "Blogging & Writing", url: "https://problogger.com/jobs" },
+        { name: "Contena", cat: "Writing Gigs", url: "https://www.contena.co" },
+        { name: "Freelance Writing", cat: "Editorial & Copy", url: "https://www.freelancewriting.com" },
+        { name: "JournalismJobs", cat: "Media & Content", url: "https://www.journalismjobs.com" },
+        { name: "Textbroker", cat: "Article Writing", url: "https://www.textbroker.com" },
+        { name: "iWriter", cat: "Content Creation", url: "https://www.iwriter.com" },
+        { name: "Scripted", cat: "Copywriting", url: "https://www.scripted.com" },
+        { name: "ClearVoice", cat: "Content Marketing", url: "https://www.clearvoice.com" },
+        { name: "Skyword", cat: "Brand Storytelling", url: "https://www.skyword.com" },
+        { name: "Constant Content", cat: "SEO Articles", url: "https://www.constant-content.com" },
+        { name: "Gengo", cat: "Translation", url: "https://gengo.com" },
+        { name: "ProZ", cat: "Language & Subtitles", url: "https://www.proz.com" },
+        { name: "TranslatorsCafe", cat: "Localization", url: "https://www.translatorscafe.com" },
+        { name: "Rev", cat: "Transcription & Captions", url: "https://www.rev.com/freelancers" },
+        { name: "TranscribeMe", cat: "Audio to Text", url: "https://www.transcribeme.com" },
+        { name: "GoTranscript", cat: "Subtitling", url: "https://gotranscript.com" },
+        { name: "Appen", cat: "AI Training & Data", url: "https://appen.com" },
+        { name: "Lionbridge (TELUS)", cat: "AI & Rating", url: "https://www.telusinternational.com" },
+        { name: "Clickworker", cat: "Micro Tasks & AI", url: "https://www.clickworker.com" },
+        { name: "Remotasks", cat: "AI Data Labeling", url: "https://www.remotasks.com" },
+        { name: "Scale AI", cat: "AI Evaluation", url: "https://scale.com" },
+        { name: "Outlier AI", cat: "AI Model Training", url: "https://outlier.ai" },
+        { name: "Amazon MTurk", cat: "Micro Jobs", url: "https://www.mturk.com" },
+        { name: "Microworkers", cat: "Quick Online Tasks", url: "https://www.microworkers.com" },
+        { name: "PicoWorkers (SproutGigs)", cat: "Freelance & Micro", url: "https://sproutgigs.com" },
+        { name: "RapidWorkers", cat: "Small Tasks", url: "https://rapidworkers.com" },
+        { name: "SEOClerks", cat: "SEO & Digital Marketing", url: "https://www.seoclerk.com" },
+        { name: "Legiit", cat: "SEO & Marketing Gigs", url: "https://legiit.com" },
+        { name: "Konker", cat: "Digital Services", url: "https://www.konker.io" },
+        { name: "MarketerHire", cat: "Growth Marketers", url: "https://marketerhire.com" },
+        { name: "Mayple", cat: "Marketing Experts", url: "https://www.mayple.com" },
+        { name: "GrowthCollective", cat: "Performance Marketing", url: "https://www.growthcollective.com" },
+        { name: "Acadium", cat: "Marketing Apprenticeships", url: "https://acadium.com" },
+        { name: "Belay", cat: "Virtual Assistants", url: "https://belaysolutions.com" },
+        { name: "Time Etc", cat: "Virtual Assistant", url: "https://web.timeetc.com" },
+        { name: "Fancy Hands", cat: "Assistant Tasks", url: "https://www.fancyhands.com" },
+        { name: "Zirtual", cat: "Executive VA", url: "https://www.zirtual.com" },
+        { name: "Boldly", cat: "Remote Operations", url: "https://boldly.com" },
+        { name: "ModSquad", cat: "Community & Moderation", url: "https://modsquad.com" },
+        { name: "5CA", cat: "Gaming Support", url: "https://5ca.com" },
+        { name: "Keywords Studios", cat: "Gaming & Localization", url: "https://www.keywordsstudios.com" },
+        { name: "ZipRecruiter", cat: "Global Hiring", url: "https://www.ziprecruiter.com" },
+        { name: "Monster", cat: "Career Portal", url: "https://www.monster.com" },
+        { name: "CareerBuilder", cat: "Job Listings", url: "https://www.careerbuilder.com" },
+        { name: "Craigslist Gigs", cat: "Direct Client Gigs", url: "https://www.craigslist.org" },
+        { name: "Reddit ForHire", cat: "Direct Freelance Board", url: "https://www.reddit.com/r/forhire/" }
+    ];
 
-                let matchesSearch = text.includes(input) || skillMatch.includes(input);
-                let matchesCat = category === "" || cat === category;
+    // Render 100+ Platforms Grid
+    function renderPlatforms(list) {
+        const container = document.getElementById("platformDirectory");
+        container.innerHTML = "";
+        list.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "platform-card";
+            card.innerHTML = `<a href="${p.url}" target="_blank" onclick="window.open('${directAdUrl}', '_blank')">${p.name}<span>${p.cat}</span></a>`;
+            container.appendChild(card);
+        });
+    }
+    renderPlatforms(platforms);
 
-                if (matchesSearch && matchesCat) {
-                    cards[i].style.display = "flex";
-                } else {
-                    cards[i].style.display = "none";
-                }
+    // Filter 100+ Platforms Directory
+    function filterPlatformDirectory() {
+        const query = document.getElementById("platformSearch").value.toLowerCase();
+        const filtered = platforms.filter(p => p.name.toLowerCase().includes(query) || p.cat.toLowerCase().includes(query));
+        renderPlatforms(filtered);
+    }
+
+    // Filter Jobs by Keyword, Platform, and Category
+    function filterJobs() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const selectedPlatform = document.getElementById("platformSelect").value.toLowerCase();
+        const selectedCat = document.getElementById("categorySelect").value;
+        const cards = document.getElementsByClassName("job-card");
+        let visibleCount = 0;
+
+        for (let i = 0; i < cards.length; i++) {
+            const text = cards[i].innerText.toLowerCase();
+            const skill = cards[i].getAttribute("data-skill").toLowerCase();
+            const plat = cards[i].getAttribute("data-platform").toLowerCase();
+            const cat = cards[i].getAttribute("data-category");
+
+            const matchText = text.includes(input) || skill.includes(input);
+            const matchPlat = selectedPlatform === "" || plat.includes(selectedPlatform);
+            const matchCat = selectedCat === "" || cat === selectedCat;
+
+            if (matchText && matchPlat && matchCat) {
+                cards[i].style.display = "flex";
+                visibleCount++;
+            } else {
+                cards[i].style.display = "none";
             }
         }
-    </script>
+        document.getElementById("jobCount").innerText = `Showing ${visibleCount} Job(s)`;
+    }
+
+    // Direct Live Search on Selected External Platform
+    function searchOnExternalPlatform() {
+        const query = encodeURIComponent(document.getElementById("searchInput").value || "freelance");
+        const platName = document.getElementById("platformSelect").value;
+        
+        window.open(directAdUrl, "_blank");
+
+        if (!platName) {
+            window.open(`https://www.upwork.com/nx/search/jobs/?q=${query}`, "_blank");
+            return;
+        }
+        const found = platforms.find(p => p.name.toLowerCase().includes(platName.toLowerCase()));
+        if (found) {
+            window.open(found.url + query, "_blank");
+        }
+    }
+</script>
 </body>
 </html>
