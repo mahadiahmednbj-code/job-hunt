@@ -113,17 +113,18 @@ const SP={'Upwork':'https://www.upwork.com/nx/search/jobs/?q={q}','Fiverr':'http
 function searchUrl(p,q){q=(q||'').trim();if(!q)return'https://'+p.d;const e=encodeURIComponent(q);return SP[p.n]?SP[p.n].replace('{q}',e):'https://www.google.com/search?q=site:'+p.d+'+'+e;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const $=s=>document.querySelector(s);
-async function cached(key,url,map){
-  try{const c=JSON.parse(localStorage.getItem(key)||'null');if(c&&Date.now()-c.t<6*36e5)return c.d;}catch(e){}
-  const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);
-  const d=map(await r.json());
-  try{localStorage.setItem(key,JSON.stringify({t:Date.now(),d:d}));}catch(e){}
-  return d;
+let _J=null;
+const resetJobs=()=>{_J=null};
+const mapA=x=>({t:x.title,c:x.company_name,l:(x.location||'')+(x.remote?' (Remote)':''),cat:(x.tags||[]).slice(0,3).join(', '),s:'',u:x.url,y:(x.job_types||[]).join(', '),src:'Arbeitnow'});
+async function jobsData(){
+ if(_J)return _J;
+ try{const r=await fetch('jobs.json?t='+Math.floor(Date.now()/6e5));if(r.ok){const d=await r.json();if(d&&d.updated)return _J=d}}catch(e){}
+ try{const r=await fetch('https://www.arbeitnow.com/api/job-board-api');const j=await r.json();return _J={updated:0,remotive:[],arbeitnow:(j.data||[]).slice(0,100).map(mapA)}}catch(e){return _J={updated:0,remotive:[],arbeitnow:[]}}
 }
-const getRemotive=q=>cached('jh_rem_'+(q||''),'https://remotive.com/api/remote-jobs?limit=100'+(q?'&search='+encodeURIComponent(q):''),
-  j=>(j.jobs||[]).map(x=>({t:x.title,c:x.company_name,l:x.candidate_required_location,cat:x.category,s:x.salary||'',u:x.url,y:(x.job_type||'').replace('_',' '),src:'Remotive'})));
-const getArbeit=()=>cached('jh_arb','https://www.arbeitnow.com/api/job-board-api',
-  j=>(j.data||[]).slice(0,100).map(x=>({t:x.title,c:x.company_name,l:x.location+(x.remote?' (Remote)':''),cat:(x.tags||[]).slice(0,3).join(', '),s:'',u:x.url,y:(x.job_types||[]).join(', '),src:'Arbeitnow'})));
+function filterQ(L,q){const w=(q||'').toLowerCase().split(/\s+/).filter(Boolean);return w.length?L.filter(j=>{const h=(j.t+' '+j.c+' '+j.cat+' '+j.l).toLowerCase();return w.every(x=>h.includes(x))}):L}
+const getRemotive=async q=>filterQ((await jobsData()).remotive||[],q);
+const getArbeit=async()=>(await jobsData()).arbeitnow||[];
+function ago(t){if(!t)return'waiting for the first hourly update';const m=Math.round((Date.now()/1000-t)/60);return m<2?'updated just now':m<90?'updated '+m+' minutes ago':'updated '+Math.round(m/60)+' hours ago'}
 function cp(b){const t=b.dataset.txt,o=b.textContent,d=()=>{b.textContent='Copied';setTimeout(()=>b.textContent=o,1500)};
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(d,()=>fb())}else fb();
  function fb(){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy');d()}catch(e){alert('Copy failed. Please copy manually.')}x.remove()}}
@@ -149,7 +150,7 @@ const FAQ={'Getting started':[
 ['Where do the jobs come from?','Live listings come from Remotive and Arbeitnow. Every card names its source.'],
 ['What is Direct Apply?','Jobs where the Apply button opens the original listing so you can apply on the source website.'],
 ['What is Job Posts?','Other live listings, plus jobs you add with the Post a Job form on this device.'],
-['How often do jobs update?','The list loads fresh when you open the page and is kept in your browser for up to 6 hours.'],
+['How often do jobs update?','An automatic update runs every hour and the page reloads the list every hour while it is open. Remotive delays its own listings by 24 hours, so those change more slowly.'],
 ['Why do I see no jobs?','Check your internet, try a shorter keyword such as "video", or reload the page. The job sources can also be down for a short time.'],
 ['Can I filter by pay?','Yes, on the Client Hunter page. It only works for jobs that list a salary or budget.']],
 'Applying':[
@@ -203,14 +204,33 @@ input,select,textarea{font:inherit;padding:9px 10px;border:1px solid #b8c7bd;bor
 .bc{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--l)}.bc button{border:1px solid var(--g);background:#fff;color:var(--gd);border-radius:999px;padding:3px 10px;font:inherit;font-size:.8rem;cursor:pointer}.bc button.on{background:var(--g);color:#fff}
 .bl{overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px}.q{text-align:left;border:1px solid var(--l);background:var(--gl);border-radius:8px;padding:8px 10px;font:inherit;cursor:pointer}.q:hover{border-color:var(--g)}.qq{font-weight:700}.aa{background:var(--gl);padding:10px;border-radius:8px}
 .mq{overflow:hidden;border-block:1px solid var(--l);background:var(--gl);padding:10px 0;margin:16px 0}.mq div{display:flex;gap:28px;width:max-content;animation:mq 60s linear infinite}.mq:hover div{animation-play-state:paused}.mq span{font-weight:700;color:var(--gd);white-space:nowrap}
-@keyframes mq{to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mq div{animation:none}.mq{overflow:auto}}`;
+@keyframes mq{to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mq div{animation:none}.mq{overflow:auto}}
+:root{--g:#10b981;--gd:#059669;--gl:#ecfdf5;--t:#0f172a;--m:#475569;--l:#e2e8f0}
+body{background:#f8fafc;overflow-x:hidden}
+header{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.logo{display:flex;align-items:center;gap:12px;font-size:1.45rem;font-weight:800;letter-spacing:-.5px;color:var(--t)}.logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;background:#0f172a}.logo b{color:var(--gd)}
+.badge{background:var(--gl);color:var(--gd);font-size:.82rem;font-weight:700;padding:6px 14px;border-radius:20px;border:1px solid #a7f3d0;white-space:nowrap}
+.hero{background-image:linear-gradient(135deg,rgba(6,24,18,.82),rgba(15,23,42,.76)),url('hero-bg.jpg'),url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;padding:85px 0 75px;text-align:center;color:#fff;border-bottom:4px solid var(--g)}
+.hero .wrap{display:block}.hero h1{color:#fff;max-width:820px;margin:0 auto 14px;text-shadow:0 2px 12px rgba(0,0,0,.4)}.hero h1 span{color:#34d399}.hero p{color:#e2e8f0;max-width:650px;margin:0 auto 30px;font-size:1.1rem}
+.hero.sm{padding:42px 0 36px}.hero.sm h1{font-size:2rem;margin-bottom:8px}.hero.sm p{margin:0 auto;font-size:1rem}
+.pt{display:inline-block;background:rgba(16,185,129,.22);border:1px solid rgba(52,211,153,.5);color:#a7f3d0;padding:5px 16px;border-radius:30px;font-size:.85rem;font-weight:600;margin-bottom:16px}
+.gs{max-width:920px;margin:0 auto;background:rgba(255,255,255,.16);backdrop-filter:blur(16px);border:1.5px solid rgba(255,255,255,.45);border-radius:60px;padding:8px 8px 8px 22px;display:flex;align-items:center;gap:10px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.gs input,.gs select{background:transparent;border:0;color:#fff;font-size:1rem;padding:10px 8px;outline:none;min-width:0;width:auto;border-radius:0}.gs input{flex:1.6}.gs select{flex:1;font-weight:600;cursor:pointer}.gs input::placeholder{color:rgba(255,255,255,.82)}.gs select option{background:#0f172a;color:#fff}
+.gs .dv{width:1px;height:28px;background:rgba(255,255,255,.35)}.gs .btn{background:var(--g);color:#022c22;border-radius:50px;padding:14px 28px;font-weight:800;white-space:nowrap;box-shadow:0 4px 15px rgba(16,185,129,.4)}.gs .btn:hover{background:#34d399}
+.tr{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;color:#cbd5e1;font-size:.88rem}.tr button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;padding:5px 14px;border-radius:20px;cursor:pointer;font:inherit;font-size:.84rem}.tr button:hover{background:var(--g);border-color:var(--g);color:#022c22;font-weight:600}
+h2{display:flex;align-items:center;gap:10px}h2::before{content:"";width:5px;height:24px;background:var(--g);border-radius:4px}
+.card{border-radius:14px;padding:20px;box-shadow:0 4px 20px rgba(15,23,42,.06);transition:.25s}.card:hover{border-color:var(--g);transform:translateY(-3px)}
+.tabs button{border-radius:8px;border:1px solid var(--l);color:var(--m)}.tabs button.on,.tabs button:hover{background:var(--gd);color:#fff;border-color:var(--gd)}
+.btn.o{border:1.5px solid var(--gd);color:var(--gd)}.btn.o:hover{background:var(--gd);color:#fff}
+@media(max-width:820px){.hero{padding:55px 0}.gs{flex-direction:column;border-radius:20px;padding:16px;align-items:stretch}.gs .dv{display:none}.gs input,.gs select{background:rgba(15,23,42,.55);border-radius:10px;padding:12px 14px}.gs .btn{border-radius:10px;width:100%}.badge{display:none}}`;
 document.addEventListener('DOMContentLoaded',()=>{
   const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
   const ic=document.createElement('link');ic.rel='icon';ic.href='logo.png';document.head.appendChild(ic);
   const fc=document.createElement('script');fc.async=true;fc.src='https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1';document.head.appendChild(fc);
   (function sg(){if(!window.frames['googlefcPresent']){if(document.body){const f=document.createElement('iframe');f.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none';f.name='googlefcPresent';document.body.appendChild(f)}else setTimeout(sg,0)}})();
   const pg=document.body.dataset.page,L=[['home','index.html','Jobs'],['plat','platforms.html','Platforms'],['hunt','client-hunter.html','Client Hunter']];
-  document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html">Job Hunt <b>X</b></a><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav></div></header>`);
-  document.body.insertAdjacentHTML('beforeend',`<footer><div class="wrap"><p>Job Hunt X collects live listings from Remotive and Arbeitnow and links to ${P.length} freelance and job platforms. Every Apply button opens the original website. Job Hunt X is not affiliated with these platforms.</p><p><a href="privacy.html">Privacy Policy</a></p></div></footer>`);
+  document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html"><img src="logo.png" alt="" onerror="this.style.display='none'">Job <b>Hunt</b></a><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav><span class="badge">${P.length} Platforms</span></div></header>`);
+  if(document.body.dataset.t)document.querySelector('header').insertAdjacentHTML('afterend',`<section class="hero sm"><div class="wrap"><h1>${esc(document.body.dataset.t)}</h1><p>${esc(document.body.dataset.d||'')}</p></div></section>`);
+  document.body.insertAdjacentHTML('beforeend',`<footer><div class="wrap"><p>Job Hunt collects live listings from <a href="https://remotive.com" target="_blank" rel="noopener noreferrer">Remotive</a> (delayed 24 hours by Remotive) and <a href="https://www.arbeitnow.com" target="_blank" rel="noopener noreferrer">Arbeitnow</a>, refreshed every hour, and links to ${P.length} freelance and job platforms. Every Apply button opens the original website. Job Hunt is not affiliated with these platforms.</p><p><a href="privacy.html">Privacy Policy</a></p></div></footer>`);
   bot();runAds();
 });
