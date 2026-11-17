@@ -1,239 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Hunt X / Pro — Global Remote Jobs & Direct Apply</title>
-  <meta name="description" content="Job Hunt X / Pro - 100+ Direct Apply Jobs and 100+ Verified Job Posts updated every 3 days." />
-  <link rel="icon" type="image/png" href="logo.png" />
-
-  <!-- Google AdSense Main Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script>
-  <!-- Google Ad Blocking Recovery -->
-  <script async src="https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1"></script>
-  <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-
-  <style>
-    :root {
-      --bg: #090d16;
-      --surface: #111827;
-      --surface-2: #1f2937;
-      --primary: #3b82f6;
-      --accent: #10b981;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
-      --border: #374151;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; }
-    a { text-decoration: none; color: inherit; }
-
-    header {
-      background: rgba(17, 24, 39, 0.95);
-      border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 900;
-      backdrop-filter: blur(10px);
-    }
-    .nav-container {
-      max-width: 1280px; margin: auto; padding: 14px 20px;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; color: #fff; }
-    .brand span.badge {
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      font-size: 0.72rem; padding: 3px 8px; border-radius: 999px;
-    }
-    nav { display: flex; gap: 10px; flex-wrap: wrap; }
-    nav a {
-      padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
-      background: var(--surface-2); border: 1px solid var(--border); transition: 0.2s;
-    }
-    nav a.active, nav a:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
-
-    .hero { max-width: 1280px; margin: 24px auto; padding: 0 20px; }
-    .hero-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      display: grid; grid-template-columns: 1.2fr 0.8fr; overflow: hidden; align-items: center;
-    }
-    .hero-content { padding: 40px; }
-    .hero-content h1 { font-size: 2.3rem; margin-bottom: 12px; line-height: 1.2; }
-    .hero-content p { color: var(--muted); margin-bottom: 20px; font-size: 1.05rem; }
-    .hero-img { background: #070a12; min-height: 280px; display: flex; align-items: center; justify-content: center; color: var(--muted); border-left: 1px solid var(--border); font-weight: 600; }
-
-    .container { max-width: 1280px; margin: auto; padding: 0 20px 60px; }
-    .section-title { font-size: 1.6rem; margin: 30px 0 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
-    .section-title span { font-size: 0.9rem; background: var(--surface-2); padding: 4px 12px; border-radius: 999px; color: var(--accent); }
-
-    .filter-bar {
-      background: var(--surface); padding: 16px; border-radius: 12px; border: 1px solid var(--border);
-      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
-    }
-    .filter-bar input, .filter-bar select {
-      background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
-      padding: 10px 14px; border-radius: 8px; flex: 1; min-width: 200px; outline: none;
-    }
-
-    .grid-listings { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; margin-bottom: 40px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px;
-      display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s;
-    }
-    .card:hover { border-color: var(--primary); transform: translateY(-2px); }
-    .card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
-    .card-meta { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
-    .tag { background: var(--surface-2); padding: 3px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .tag.highlight { background: rgba(16, 185, 129, 0.15); color: var(--accent); border-color: rgba(16, 185, 129, 0.3); }
-    .card-desc { font-size: 0.92rem; color: #d1d5db; margin-bottom: 18px; }
-    .btn-apply {
-      background: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 8px;
-      font-weight: 600; cursor: pointer; text-align: center; transition: 0.2s;
-    }
-    .btn-apply:hover { background: #2563eb; }
-
-    @media (max-width: 900px) { .hero-card { grid-template-columns: 1fr; } }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="brand">
-        Job Hunt <span class="badge">X / PRO</span>
-      </a>
-      <nav>
-        <a href="index.html" class="active">🔥 Live Jobs</a>
-        <a href="platforms.html">🌐 100+ Platforms</a>
-        <a href="client-hunter.html">🎯 Client Hunter Pro</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero Section with Professional Look & Image Placeholder -->
-  <section class="hero">
-    <div class="hero-card">
-      <div class="hero-content">
-        <h1>Global Remote Jobs & Verified Direct Opportunities</h1>
-        <p>Access 100+ Direct Apply listings and 100+ active Job Posts updated every 3 days. Clean, professional, and fully secure.</p>
-        <div style="display:flex; gap:12px; font-size:0.88rem; color:var(--accent);">
-          <span>✓ 100+ Direct Apply</span>
-          <span>✓ 100+ Job Posts</span>
-          <span>✓ Zero Spam / 100% AdSense Safe</span>
-        </div>
-      </div>
-      <div class="hero-img">
-        <span>[ Professional Hero Image Area ]</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="container">
-    <!-- SECTION 1: DIRECT APPLY (100+ Listings) -->
-    <div class="section-title">
-      🚀 100+ Direct Apply Opportunities <span>Active & Verified</span>
-    </div>
-    <div class="filter-bar">
-      <input type="text" id="searchDirect" placeholder="Search direct apply roles..." onkeyup="filterListings('direct')" />
-      <select id="filterDirectCat" onchange="filterListings('direct')">
-        <option value="all">All Categories</option>
-        <option value="video">Video Editing & AMV</option>
-        <option value="dev">Web & App Development</option>
-        <option value="seo">YouTube SEO & Growth</option>
-      </select>
-    </div>
-    <div class="grid-listings" id="directGrid">
-      <!-- 100+ Simulated Direct Apply Cards -->
-      <div class="card" data-cat="video">
-        <div>
-          <div class="card-title">Senior Short-Form Video Editor</div>
-          <div class="card-meta">
-            <span class="tag highlight">Direct Apply</span>
-            <span class="tag">Remote (USA/Global)</span>
-            <span class="tag">$30 - $45/hr</span>
-          </div>
-          <div class="card-desc">Looking for an expert editor proficient in CapCut and Premiere Pro for fast-paced short-form anime and brand edits.</div>
-        </div>
-        <button class="btn-apply" onclick="alert('Redirecting to Direct Application Portal...')">Apply Directly Now ↗</button>
-      </div>
-      <div class="card" data-cat="seo">
-        <div>
-          <div class="card-title">YouTube Channel SEO Manager</div>
-          <div class="card-meta">
-            <span class="tag highlight">Direct Apply</span>
-            <span class="tag">Remote</span>
-            <span class="tag">$600 - $1000/mo</span>
-          </div>
-          <div class="card-desc">Manage metadata, high-CTR thumbnails, and audience analytics for major YouTube creator channels.</div>
-        </div>
-        <button class="btn-apply" onclick="alert('Redirecting to Direct Application Portal...')">Apply Directly Now ↗</button>
-      </div>
-      <div class="card" data-cat="dev">
-        <div>
-          <div class="card-title">Full-Stack Web Developer (React / Node)</div>
-          <div class="card-meta">
-            <span class="tag highlight">Direct Apply</span>
-            <span class="tag">Remote</span>
-            <span class="tag">$40 - $60/hr</span>
-          </div>
-          <div class="card-desc">Build and scale interactive web applications, dashboards, and automated tools with high performance.</div>
-        </div>
-        <button class="btn-apply" onclick="alert('Redirecting to Direct Application Portal...')">Apply Directly Now ↗</button>
-      </div>
-    </div>
-
-    <!-- SECTION 2: JOB POSTS (100+ Listings) -->
-    <div class="section-title" style="margin-top: 50px;">
-      💼 100+ Active Job Posts <span>Global Contracts</span>
-    </div>
-    <div class="filter-bar">
-      <input type="text" id="searchPosts" placeholder="Search job posts..." onkeyup="filterListings('posts')" />
-      <select id="filterPostsCat" onchange="filterListings('posts')">
-        <option value="all">All Categories</option>
-        <option value="design">Graphic Design & Art</option>
-        <option value="writing">Content Writing & Copy</option>
-      </select>
-    </div>
-    <div class="grid-listings" id="postsGrid">
-      <div class="card" data-cat="design">
-        <div>
-          <div class="card-title">Thumbnail & Cover Art Designer</div>
-          <div class="card-meta">
-            <span class="tag highlight">Job Post</span>
-            <span class="tag">Fixed Price</span>
-            <span class="tag">$25 / Thumbnail</span>
-          </div>
-          <div class="card-desc">Need vibrant, high-click-through-rate custom thumbnails and channel cover art for gaming and anime channels.</div>
-        </div>
-        <button class="btn-apply" onclick="alert('Opening Job Post details...')">View Job Post ↗</button>
-      </div>
-      <div class="card" data-cat="writing">
-        <div>
-          <div class="card-title">Scriptwriter for YouTube Storytelling</div>
-          <div class="card-meta">
-            <span class="tag highlight">Job Post</span>
-            <span class="tag">Hourly / Project</span>
-            <span class="tag">$20 - $35/hr</span>
-          </div>
-          <div class="card-desc">Write engaging narrative scripts for viral Bengali and English storytelling short videos.</div>
-        </div>
-        <button class="btn-apply" onclick="alert('Opening Job Post details...')">View Job Post ↗</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function filterListings(type) {
-      let query = document.getElementById(type === 'direct' ? 'searchDirect' : 'searchPosts').value.toLowerCase();
-      let cat = document.getElementById(type === 'direct' ? 'filterDirectCat' : 'filterPostsCat').value;
-      let cards = document.querySelectorAll(type === 'direct' ? '#directGrid .card' : '#postsGrid .card');
-      
-      cards.forEach(card => {
-        let text = card.innerText.toLowerCase();
-        let cardCat = card.getAttribute('data-cat');
-        let matchCat = (cat === 'all' || cardCat === cat);
-        let matchQuery = text.includes(query);
-        card.style.display = (matchCat && matchQuery) ? 'flex' : 'none';
-      });
-    }
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title><meta name="description" content="Live remote and freelance jobs, plus links to 100+ job platforms."></head>
+<body data-page="home">
+<section class="hero"><div class="wrap"><div><h1>Find freelance and remote work in one place</h1><p class="m" style="margin:12px 0 18px">Live job listings, a directory of <span id="pc"></span> platforms, and a client search tool. Free to use.</p>
+<form id="sf" class="row" style="margin:0"><input id="q" placeholder="Skill, e.g. video editing" aria-label="Skill"><button class="btn">Search jobs</button></form></div>
+<svg viewBox="0 0 320 220" role="img" aria-label="Illustration of a laptop with job cards"><rect x="40" y="30" width="240" height="150" rx="12" fill="#fff" stroke="#16a34a" stroke-width="4"/><rect x="62" y="52" width="110" height="14" rx="7" fill="#16a34a"/><rect x="62" y="78" width="196" height="10" rx="5" fill="#bbf7d0"/><rect x="62" y="98" width="160" height="10" rx="5" fill="#bbf7d0"/><rect x="62" y="124" width="70" height="26" rx="8" fill="#14532d"/><circle cx="240" cy="140" r="22" fill="#86efac"/><path d="M229 140l8 8 15-17" stroke="#14532d" stroke-width="5" fill="none"/><rect x="20" y="186" width="280" height="12" rx="6" fill="#16a34a"/></svg></div></section>
+<div class="wrap"><div data-ad="banner"></div></div>
+<main class="wrap"><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="n">Post a Job</button></div>
+<div id="st" class="note" aria-live="polite">Loading jobs...</div><div id="out" class="grid"></div><div data-ad="feed"></div>
+<form id="pf" hidden style="max-width:560px"><h2 style="margin-top:0">Post a job</h2><div class="row"><div><label for="pt">Job title</label><input id="pt" required></div><div><label for="pc2">Company or name</label><input id="pc2" required></div></div><div class="row"><div><label for="pb">Budget (optional)</label><input id="pb" placeholder="e.g. 200 USD"></div><div><label for="pu">How to apply (link or email)</label><input id="pu" required></div></div><label for="pd">Details</label><textarea id="pd" rows="4"></textarea><p class="m s" style="margin:8px 0">Posts are saved only in this browser. Other visitors cannot see them until a shared database is added.</p><button class="btn">Publish on this device</button></form><div data-ad="article"></div></main>
+<script>
+$('#pc').textContent=P.length;
+let tab='a',A=[],B=[],err='';
+const mine=()=>{try{return JSON.parse(localStorage.getItem('jh_posts')||'[]')}catch(e){return[]}};
+function draw(){
+ $('#pf').hidden=tab!='n';$('#out').hidden=tab=='n';$('#st').hidden=tab=='n';if(tab=='n')return;
+ const q=$('#q').value.trim().toLowerCase();
+ let L=tab=='a'?A:mine().map(x=>({t:x.t,c:x.c,l:'Posted on this device',cat:'',s:x.b,u:/^[\w.+-]+@[\w.-]+$/.test(x.u)?'mailto:'+x.u:(/^https?:/.test(x.u)?x.u:'https://'+x.u),y:'',src:'this site'})).concat(B);
+ if(q)L=L.filter(j=>(j.t+' '+j.c+' '+j.cat).toLowerCase().includes(q));
+ $('#out').innerHTML=L.map(jobCard).join('');
+ $('#st').textContent=err||(L.length+' jobs shown');
+}
+async function load(){
+ $('#st').textContent='Loading jobs...';err='';
+ try{A=await getRemotive($('#q').value.trim())}catch(e){A=[];err='Could not load Direct Apply jobs. Check your internet and try again.'}
+ try{B=await getArbeit()}catch(e){B=[];err=err||'Could not load Job Posts. Check your internet and try again.'}
+ draw();
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;draw()});
+$('#sf').onsubmit=e=>{e.preventDefault();load()};
+$('#pf').onsubmit=e=>{e.preventDefault();const a=mine();a.unshift({t:$('#pt').value,c:$('#pc2').value,b:$('#pb').value,u:$('#pu').value.trim()});try{localStorage.setItem('jh_posts',JSON.stringify(a))}catch(x){alert('Could not save in this browser.');return}e.target.reset();document.querySelector('[data-t=p]').click()};
+load();
+</script></body></html>
