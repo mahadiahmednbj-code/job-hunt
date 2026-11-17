@@ -1,0 +1,216 @@
+/* Job Hunt - shared file: styles, menu, footer, platform list, job loaders */
+const P=`Upwork|upwork.com|General
+Fiverr|fiverr.com|General
+Freelancer.com|freelancer.com|General
+PeoplePerHour|peopleperhour.com|General
+Guru|guru.com|General
+Toptal|toptal.com|General
+Truelancer|truelancer.com|General
+Workana|workana.com|General
+Hubstaff Talent|talent.hubstaff.com|General
+Freelancermap|freelancermap.com|General
+Malt|malt.com|General
+Contra|contra.com|General
+Braintrust|usebraintrust.com|General
+Outsourcely|outsourcely.com|General
+Bark|bark.com|General
+Airtasker|airtasker.com|General
+Legiit|legiit.com|General
+Twine|twine.net|General
+YunoJuno|yunojuno.com|General
+SolidGigs|solidgigs.com|General
+Freelance.de|freelance.de|General
+Codeur|codeur.com|General
+Remotive|remotive.com|Remote
+RemoteOK|remoteok.com|Remote
+We Work Remotely|weworkremotely.com|Remote
+Remote.co|remote.co|Remote
+FlexJobs|flexjobs.com|Remote
+Working Nomads|workingnomads.com|Remote
+Jobspresso|jobspresso.co|Remote
+JustRemote|justremote.co|Remote
+Himalayas|himalayas.app|Remote
+NoDesk|nodesk.co|Remote
+Pangian|pangian.com|Remote
+Jobicy|jobicy.com|Remote
+Arbeitnow|arbeitnow.com|Remote
+Virtual Vocations|virtualvocations.com|Remote
+Wellfound|wellfound.com|Startup
+Welcome to the Jungle|welcometothejungle.com|Startup
+Landing.jobs|landing.jobs|Startup
+Indeed|indeed.com|Job Boards
+LinkedIn Jobs|linkedin.com/jobs|Job Boards
+Glassdoor|glassdoor.com|Job Boards
+SimplyHired|simplyhired.com|Job Boards
+ZipRecruiter|ziprecruiter.com|Job Boards
+Monster|monster.com|Job Boards
+CareerBuilder|careerbuilder.com|Job Boards
+Jooble|jooble.org|Job Boards
+Adzuna|adzuna.com|Job Boards
+Talent.com|talent.com|Job Boards
+Naukri|naukri.com|Job Boards
+BDJobs|bdjobs.com|Job Boards
+Behance Jobs|behance.net/joblist|Design
+Dribbble Jobs|dribbble.com/jobs|Design
+99designs|99designs.com|Design
+DesignCrowd|designcrowd.com|Design
+crowdSPRING|crowdspring.com|Design
+Working Not Working|workingnotworking.com|Design
+Coroflot|coroflot.com|Design
+Creativepool|creativepool.com|Design
+Krop|krop.com|Design
+Awwwards Jobs|awwwards.com/jobs|Design
+Mandy|mandy.com|Video & Audio
+ProductionHub|productionhub.com|Video & Audio
+Voices|voices.com|Video & Audio
+Voice123|voice123.com|Video & Audio
+Bodalgo|bodalgo.com|Video & Audio
+Backstage|backstage.com|Video & Audio
+Mediabistro|mediabistro.com|Writing
+ProBlogger Jobs|problogger.com/jobs|Writing
+Contently|contently.com|Writing
+Textbroker|textbroker.com|Writing
+ClearVoice|clearvoice.com|Writing
+Kolabtree|kolabtree.com|Writing
+ProZ|proz.com|Translation
+TranslatorsCafe|translatorscafe.com|Translation
+Gengo|gengo.com|Translation
+Dice|dice.com|Tech
+Codementor|codementor.io|Tech
+Turing|turing.com|Tech
+Andela|andela.com|Tech
+Crossover|crossover.com|Tech
+X-Team|x-team.com|Tech
+Topcoder|topcoder.com|Tech
+Codeable|codeable.io|Tech
+Arc|arc.dev|Tech
+Lemon.io|lemon.io|Tech
+Gun.io|gun.io|Tech
+Flexiple|flexiple.com|Tech
+Torre|torre.ai|Tech
+MarketerHire|marketerhire.com|Marketing
+Clickworker|clickworker.com|Micro Tasks
+Amazon MTurk|mturk.com|Micro Tasks
+Prolific|prolific.com|Micro Tasks
+UserTesting|usertesting.com|Micro Tasks
+Respondent|respondent.io|Micro Tasks
+Appen|appen.com|Micro Tasks
+Remotasks|remotasks.com|Micro Tasks
+Microworkers|microworkers.com|Micro Tasks
+Rev|rev.com/freelancers|Micro Tasks
+TranscribeMe|transcribeme.com|Micro Tasks
+Preply|preply.com|Teaching
+italki|italki.com|Teaching
+Cambly|cambly.com|Teaching
+Wyzant|wyzant.com|Teaching
+Belay|belaysolutions.com|Assistant
+Time Etc|timeetc.com|Assistant
+Fancy Hands|fancyhands.com|Assistant
+ReliefWeb|reliefweb.int|NGO
+Devex|devex.com|NGO`.split('\n').map(l=>{const[a,b,c]=l.split('|');return{n:a,d:b,c:c}});
+const CATS=[...new Set(P.map(p=>p.c))];
+const SP={'Upwork':'https://www.upwork.com/nx/search/jobs/?q={q}','Fiverr':'https://www.fiverr.com/search/gigs?query={q}','Freelancer.com':'https://www.freelancer.com/jobs/?keyword={q}','PeoplePerHour':'https://www.peopleperhour.com/freelance-jobs?q={q}','Indeed':'https://www.indeed.com/jobs?q={q}','LinkedIn Jobs':'https://www.linkedin.com/jobs/search/?keywords={q}','We Work Remotely':'https://weworkremotely.com/remote-jobs/search?term={q}'};
+function searchUrl(p,q){q=(q||'').trim();if(!q)return'https://'+p.d;const e=encodeURIComponent(q);return SP[p.n]?SP[p.n].replace('{q}',e):'https://www.google.com/search?q=site:'+p.d+'+'+e;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const $=s=>document.querySelector(s);
+async function cached(key,url,map){
+  try{const c=JSON.parse(localStorage.getItem(key)||'null');if(c&&Date.now()-c.t<6*36e5)return c.d;}catch(e){}
+  const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=map(await r.json());
+  try{localStorage.setItem(key,JSON.stringify({t:Date.now(),d:d}));}catch(e){}
+  return d;
+}
+const getRemotive=q=>cached('jh_rem_'+(q||''),'https://remotive.com/api/remote-jobs?limit=100'+(q?'&search='+encodeURIComponent(q):''),
+  j=>(j.jobs||[]).map(x=>({t:x.title,c:x.company_name,l:x.candidate_required_location,cat:x.category,s:x.salary||'',u:x.url,y:(x.job_type||'').replace('_',' '),src:'Remotive'})));
+const getArbeit=()=>cached('jh_arb','https://www.arbeitnow.com/api/job-board-api',
+  j=>(j.data||[]).slice(0,100).map(x=>({t:x.title,c:x.company_name,l:x.location+(x.remote?' (Remote)':''),cat:(x.tags||[]).slice(0,3).join(', '),s:'',u:x.url,y:(x.job_types||[]).join(', '),src:'Arbeitnow'})));
+function cp(b){const t=b.dataset.txt,o=b.textContent,d=()=>{b.textContent='Copied';setTimeout(()=>b.textContent=o,1500)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(d,()=>fb())}else fb();
+ function fb(){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy');d()}catch(e){alert('Copy failed. Please copy manually.')}x.remove()}}
+function jobCard(j){
+ const p='Write a short, professional job application for the "'+j.t+'" role at '+j.c+'. Use my skills and experience: [paste your skills here]. Keep it under 150 words, friendly and clear, and end by asking for a short call or chat.';
+ const cl='Hello '+j.c+' team,\n\nI am excited to apply for the '+j.t+' role. I have experience in [your main skill] and have completed [number] similar projects. I can start [date] and will share relevant samples on request.\n\nThank you for your time.\n[Your name]';
+ return `<article class="card"><h3>${esc(j.t)}</h3><p class="m">${esc(j.c)}${j.l?' · '+esc(j.l):''}</p><p>${j.cat?`<span class="tag">${esc(j.cat)}</span>`:''}${j.y?`<span class="tag">${esc(j.y)}</span>`:''}${j.s?`<span class="tag pay">${esc(j.s)}</span>`:''}</p><p class="m s">Source: ${esc(j.src)}</p><a class="btn" href="${esc(j.u)}" target="_blank" rel="noopener noreferrer">Apply on ${esc(j.src)}</a><button class="btn o" data-txt="${esc(p)}" onclick="cp(this)">Copy apply prompt</button><button class="btn o" data-txt="${esc(cl)}" onclick="cp(this)">Copy cover letter</button></article>`;}
+function topPay(s){const n=(String(s).replace(/(\d)k\b/gi,'$1000').match(/\d[\d,]*/g)||[]).map(x=>+x.replace(/,/g,''));return n.length?Math.max(...n):0;}
+const CONTACT='ferdusalommahadi@gmail.com';
+const PUB='ca-pub-4306254455862264';
+function adHtml(k){const b='data-ad-client="'+PUB+'"';
+ if(k=='banner')return'<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" '+b+' data-ad-slot="6140919742"></ins>';
+ if(k=='feed')return'<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-ef+6k-30-ac+ty" '+b+' data-ad-slot="4658261774"></ins>';
+ if(k=='article')return'<ins class="adsbygoogle" style="display:block;text-align:center" data-ad-layout="in-article" data-ad-format="fluid" '+b+' data-ad-slot="2354038773"></ins>';
+ return'<ins class="adsbygoogle" style="display:inline-block;width:360px;height:800px" '+b+' data-ad-slot="3678407934"></ins>';}
+function runAds(){document.querySelectorAll('[data-ad]').forEach(h=>{const k=h.dataset.ad;if((k=='banner'&&innerWidth<760)||(k=='tall'&&innerWidth<1000)){h.remove();return}
+ h.className='ad';h.innerHTML=adHtml(k);try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({})}catch(e){}})}
+const FAQ={'Getting started':[
+['What is Job Hunt?','A free website that shows live remote and freelance jobs, links to '+P.length+' job platforms, and helps you search for clients.'],
+['Is Job Hunt free?','Yes. You do not need an account or payment. The site is supported by Google ads.'],
+['Which devices work?','Any modern browser on a phone, tablet or computer.']],
+'Finding jobs':[
+['Where do the jobs come from?','Live listings come from Remotive and Arbeitnow. Every card names its source.'],
+['What is Direct Apply?','Jobs where the Apply button opens the original listing so you can apply on the source website.'],
+['What is Job Posts?','Other live listings, plus jobs you add with the Post a Job form on this device.'],
+['How often do jobs update?','The list loads fresh when you open the page and is kept in your browser for up to 6 hours.'],
+['Why do I see no jobs?','Check your internet, try a shorter keyword such as "video", or reload the page. The job sources can also be down for a short time.'],
+['Can I filter by pay?','Yes, on the Client Hunter page. It only works for jobs that list a salary or budget.']],
+'Applying':[
+['How do I apply?','Press the Apply button on a job card. It opens the original website where you finish the application.'],
+['What does Copy apply prompt do?','It copies a ready instruction for an AI chat tool. Paste it there, add your skills where marked, and get a draft application.'],
+['What does Copy cover letter do?','It copies a short cover letter with the job title and company filled in. Replace the parts in [brackets] before sending.'],
+['How do I write a good proposal?','Keep it short. Show you read the job, mention two or three relevant samples, give a clear price and time, and ask one question.']],
+'Client Hunter':[
+['What does Client Hunter do?','It searches live job posts by skill, location, job type and budget, and opens the same search on many platforms and public sources.'],
+['Can it show client emails or social profiles?','No. Platforms do not publish private contact details, and collecting them would break their rules and privacy laws. Use the messaging tools of each platform.'],
+['Why does a platform open a Google search?','Some platforms have no reliable public search link, so Job Hunt searches that website through Google.']],
+'Safety':[
+['How do I avoid scams?','Never pay to get a job. Keep chat and payment inside the platform. Be careful with gift cards, requests for bank details, and offers that seem too good.'],
+['Does Job Hunt collect my details?','No sign-up is needed. Jobs you post are saved only in your own browser.'],
+['Who can see the jobs I post?','Only you, on this device. A shared database is needed to show posts to other visitors.']],
+'Ads and privacy':[
+['Why are there ads?','Google ads keep the site free.'],
+['Do ads use cookies?','Google and its partners may use cookies for ads. Read the Privacy Policy for details.']],
+'Platforms':P.map(p=>['How do I search '+p.n+'?','Open the Platforms page, type your skill, then press the button on the '+p.n+' card. It opens '+(SP[p.n]?p.n+' job search':'a Google search limited to '+p.d)+' in a new tab.'])};
+function bot(){
+ const N=Object.values(FAQ).reduce((a,b)=>a+b.length,0);
+ document.body.insertAdjacentHTML('beforeend',`<button id="bb" aria-label="Open help bot" class="bb"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V3M9 13h.01M15 13h.01M9 16h6"/></svg></button><section id="bp" class="bp" hidden aria-label="Help bot"><div class="bh"><b>Job Hunt Help</b><span class="s">${N} questions</span><button id="bx" aria-label="Close">×</button></div><div id="bc" class="bc"></div><div id="bl" class="bl"></div></section>`);
+ let cur='Getting started';
+ const list=()=>{$('#bc').innerHTML=Object.keys(FAQ).map(k=>`<button class="${k==cur?'on':''}" data-k="${esc(k)}">${esc(k)}</button>`).join('');
+  $('#bl').innerHTML=FAQ[cur].map((x,i)=>`<button class="q" data-i="${i}">${esc(x[0])}</button>`).join('');};
+ $('#bb').onclick=()=>{$('#bp').hidden=false;list()};$('#bx').onclick=()=>$('#bp').hidden=true;
+ $('#bc').onclick=e=>{if(e.target.dataset.k){cur=e.target.dataset.k;list()}};
+ $('#bl').onclick=e=>{const b=e.target.closest('.q');if(b){const x=FAQ[cur][b.dataset.i];$('#bl').innerHTML=`<p class="qq">${esc(x[0])}</p><p class="aa">${esc(x[1])}</p><button class="q" id="bk">Back to questions</button>`;$('#bk').onclick=list}};
+}
+const CSS=`:root{--g:#16a34a;--gd:#14532d;--gl:#f0fdf4;--t:#0f172a;--m:#475569;--l:#dbe4dd}
+*{box-sizing:border-box;margin:0}body{font:16px/1.6 system-ui,"Segoe UI",Arial,sans-serif;color:var(--t);background:#fff}
+.wrap{max-width:1100px;margin:auto;padding:0 16px}h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;color:var(--gd)}h2{font-size:1.5rem;margin:28px 0 12px;color:var(--gd)}h3{font-size:1.05rem}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--l);z-index:5}header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;flex-wrap:wrap}
+.logo{font-weight:800;color:var(--gd);text-decoration:none;font-size:1.2rem}.logo b{color:var(--g)}nav a{margin-left:14px;color:var(--m);text-decoration:none;font-weight:600;padding:6px 2px;border-bottom:2px solid transparent}nav a.on,nav a:hover{color:var(--gd);border-color:var(--g)}
+.hero{background:var(--gl);padding:36px 0}.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}.hero svg{width:100%;height:auto}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}nav a{margin-left:10px}}
+.m{color:var(--m)}.s{font-size:.85rem}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{border:1px solid var(--l);border-radius:12px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:6px}.card .btn{margin-top:auto;text-align:center}
+.btn{background:var(--g);color:#fff;border:0;border-radius:8px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-block;font:inherit;font-weight:600}.btn:hover{background:var(--gd)}.btn.o{background:#fff;color:var(--gd);border:1px solid var(--g)}.btn.o:hover{background:var(--gl)}
+input,select,textarea{font:inherit;padding:9px 10px;border:1px solid #b8c7bd;border-radius:8px;width:100%;background:#fff}label{font-weight:600;font-size:.9rem;display:block;margin-bottom:3px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.row>*{flex:1 1 170px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tabs button{border:1px solid var(--g);background:#fff;color:var(--gd);border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer}.tabs button.on{background:var(--g);color:#fff}
+.tag{display:inline-block;background:var(--gl);color:var(--gd);border-radius:6px;padding:1px 8px;font-size:.8rem;margin:0 6px 4px 0}.tag.pay{background:#fef9c3;color:#713f12}
+.note{background:var(--gl);border-left:4px solid var(--g);padding:10px 14px;border-radius:6px;margin:12px 0}
+:focus-visible{outline:3px solid #86efac;outline-offset:2px}footer{margin-top:48px;border-top:1px solid var(--l);padding:22px 0;color:var(--m);font-size:.9rem}
+.ad{margin:18px auto;text-align:center;overflow:hidden;max-width:100%}
+.card .btn{margin-top:0}.card a.btn{margin-top:auto}
+.bb{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;border:0;background:var(--g);cursor:pointer;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.bp{position:fixed;right:16px;bottom:84px;width:min(360px,calc(100vw - 32px));max-height:70vh;background:#fff;border:1px solid var(--l);border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:21;display:flex;flex-direction:column;overflow:hidden}.bp[hidden]{display:none}
+.bh{background:var(--g);color:#fff;padding:10px 14px;display:flex;gap:8px;align-items:center}.bh b{flex:1}.bh .s{color:#dcfce7}.bh button{background:none;border:0;color:#fff;font-size:1.5rem;cursor:pointer}
+.bc{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--l)}.bc button{border:1px solid var(--g);background:#fff;color:var(--gd);border-radius:999px;padding:3px 10px;font:inherit;font-size:.8rem;cursor:pointer}.bc button.on{background:var(--g);color:#fff}
+.bl{overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px}.q{text-align:left;border:1px solid var(--l);background:var(--gl);border-radius:8px;padding:8px 10px;font:inherit;cursor:pointer}.q:hover{border-color:var(--g)}.qq{font-weight:700}.aa{background:var(--gl);padding:10px;border-radius:8px}
+.mq{overflow:hidden;border-block:1px solid var(--l);background:var(--gl);padding:10px 0;margin:16px 0}.mq div{display:flex;gap:28px;width:max-content;animation:mq 60s linear infinite}.mq:hover div{animation-play-state:paused}.mq span{font-weight:700;color:var(--gd);white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mq div{animation:none}.mq{overflow:auto}}`;
+document.addEventListener('DOMContentLoaded',()=>{
+  const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+  const ic=document.createElement('link');ic.rel='icon';ic.href='logo.png';document.head.appendChild(ic);
+  const fc=document.createElement('script');fc.async=true;fc.src='https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1';document.head.appendChild(fc);
+  (function sg(){if(!window.frames['googlefcPresent']){if(document.body){const f=document.createElement('iframe');f.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none';f.name='googlefcPresent';document.body.appendChild(f)}else setTimeout(sg,0)}})();
+  const pg=document.body.dataset.page,L=[['home','index.html','Jobs'],['plat','platforms.html','Platforms'],['hunt','client-hunter.html','Client Hunter']];
+  document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html">Job Hunt <b>X</b></a><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav></div></header>`);
+  document.body.insertAdjacentHTML('beforeend',`<footer><div class="wrap"><p>Job Hunt X collects live listings from Remotive and Arbeitnow and links to ${P.length} freelance and job platforms. Every Apply button opens the original website. Job Hunt X is not affiliated with these platforms.</p><p><a href="privacy.html">Privacy Policy</a></p></div></footer>`);
+  bot();runAds();
+});
