@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mahadiahmednbj-code.github.io/sitemap.xml
