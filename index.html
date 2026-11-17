@@ -17,9 +17,8 @@
   <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
 
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
       background: #0b0f19;
       color: #f1f5f9;
       display: flex;
@@ -30,55 +29,128 @@
       text-align: center;
       padding: 20px;
     }
+
+    /* Full-Screen First-Visit Ad Overlay */
+    #firstClickOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 10, 20, 0.97);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      cursor: pointer;
+    }
+    .overlay-box {
+      max-width: 540px;
+      width: 100%;
+      background: #131a2a;
+      border: 2px solid #f59e0b;
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+    .overlay-instruction {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px dashed #f59e0b;
+      color: #fde68a;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .pulse-btn {
+      background: #10b981;
+      color: #042f2e;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Main Test Card */
     .test-card {
       background: #131a2a;
       border: 1px solid #263147;
       border-radius: 16px;
       padding: 32px 24px;
-      max-width: 650px;
+      max-width: 660px;
       width: 100%;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
-    h1 {
-      margin: 0 0 10px;
-      font-size: 1.8rem;
-      color: #3b82f6;
-    }
-    p {
-      color: #94a3b8;
-      font-size: 0.95rem;
-      margin-bottom: 20px;
-    }
+    h1 { margin-bottom: 10px; font-size: 1.85rem; color: #3b82f6; }
+    p { color: #94a3b8; font-size: 0.96rem; margin-bottom: 20px; }
     .ad-box {
       background: #0b0f19;
       border: 1px dashed #334155;
       border-radius: 12px;
       padding: 15px;
-      margin: 20px 0;
+      margin: 18px 0;
       min-height: 110px;
     }
-    .btn-test {
-      background: #10b981;
-      color: #042f2e;
+    .btn-reward {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
       border: none;
-      padding: 12px 24px;
+      padding: 13px 24px;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 800;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 6px;
+    }
+    .btn-reset {
+      background: #334155;
+      color: #f1f5f9;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.85rem;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 14px;
     }
-    .btn-test:hover {
-      filter: brightness(1.1);
+    #unlockedContent {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid #10b981;
+      border-radius: 10px;
+      color: #d1fae5;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
-  <div class="test-card">
-    <h1>Job Hunt X / Pro — Ad Test Mode</h1>
-    <p>Monetag ভেরিফিকেশন ট্যাগ এবং Google AdSense টেস্ট পেজ সচল আছে। স্ক্রিনের যেকোনো জায়গায় ক্লিক করে বা নিচের অ্যাড বক্স চেক করে টেস্ট করুন।</p>
+  <!-- 1. Full-Screen First-Visit Ad Gate -->
+  <div id="firstClickOverlay" onclick="triggerFirstVisitAd()">
+    <div class="overlay-box">
+      <div class="overlay-instruction">
+        📢 যেকোনো জায়গায় চাপ দিন!<br/>
+        একবার ক্লিক করুন, লোডিং হতে দিন, আবার ফিরে ব্যাক (Back) ক্লিক করে ফিরে আসুন — সাথে সাথেই আপনার মূল পেজ চালু হয়ে যাবে।
+      </div>
+      <button class="pulse-btn">👉 এখানে বা যেকোনো জায়গায় চাপ দিন</button>
+    </div>
+  </div>
 
-    <!-- AdSense Display Test Box -->
+  <!-- 2. Main Test Dashboard -->
+  <div class="test-card">
+    <h1>Job Hunt X / Pro — Live Ad Test</h1>
+    <p>প্রথমবার স্ক্রিন ক্লিক সফল হয়েছে! নিচে Google AdSense বক্স, Monetag Vignette এবং Rewarded Unlock টেস্ট বাটন রয়েছে।</p>
+
+    <!-- Google AdSense Display Unit -->
     <div class="ad-box">
       <ins class="adsbygoogle"
            style="display:block"
@@ -89,10 +161,55 @@
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <button class="btn-test" onclick="alert('Test Click Active! Monetag থেকে যে Ad Script বা Direct Link পাবেন সেটি এখানে যুক্ত করা হবে।')">
-      🎯 Test Reward / Ad Trigger
-    </button>
+    <!-- Specific Feature Reward Trigger (Like Copy Prompt / Client Hunter) -->
+    <div>
+      <button class="btn-reward" onclick="triggerFeatureReward()">
+        🎬 Watch / Open Ad to Unlock Prompt (Test)
+      </button>
+    </div>
+
+    <div id="unlockedContent">
+      ✅ অভিনন্দন! রিওয়ার্ড অ্যাড দেখা সম্পন্ন হয়েছে এবং আপনার প্রম্পট / ফিচার আনলক হয়েছে!
+    </div>
+
+    <br/>
+    <button class="btn-reset" onclick="resetTestGate()">🔄 প্রথমবার ভিজিট ওভারলে আবার টেস্ট করুন</button>
   </div>
+
+  <!-- Monetag Vignette Banner Script (Zone: 12281572) -->
+  <script>(function(s){s.dataset.zone='12281572',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+  <script>
+    const MONETAG_DIRECT_LINK = "https://uplcm.com/4/12281571";
+
+    // Check if first click already done in this session
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("jh_first_ad_done") === "true") {
+        document.getElementById("firstClickOverlay").style.display = "none";
+      }
+    });
+
+    // Full screen first click handler
+    function triggerFirstVisitAd() {
+      window.open(MONETAG_DIRECT_LINK, "_blank");
+      sessionStorage.setItem("jh_first_ad_done", "true");
+      document.getElementById("firstClickOverlay").style.display = "none";
+    }
+
+    // Specific feature reward handler
+    function triggerFeatureReward() {
+      window.open(MONETAG_DIRECT_LINK, "_blank");
+      setTimeout(() => {
+        document.getElementById("unlockedContent").style.display = "block";
+      }, 2500);
+    }
+
+    // Reset button just for testing
+    function resetTestGate() {
+      sessionStorage.removeItem("jh_first_ad_done");
+      location.reload();
+    }
+  </script>
 
 </body>
 </html>
