@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Hunt — Client Hunter Pro</title>
+  <meta name="description" content="Smart X-Ray Lead Generation & Client Hunter Tool for Freelancers." />
+  <link rel="icon" type="image/png" href="logo.png" />
+
+  <!-- Google AdSense Main Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script>
+  <!-- Google Ad Blocking Recovery -->
+  <script async src="https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1"></script>
+  <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
+
+  <style>
+    :root {
+      --bg: #0b0f19; --surface: #131a2a; --surface-2: #1a2338;
+      --primary: #3b82f6; --accent: #10b981; --text: #f1f5f9; --muted: #94a3b8; --border: #263147;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: rgba(19, 26, 42, 0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 900; backdrop-filter: blur(10px); }
+    .nav-container { max-width: 1280px; margin: auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 800; }
+    .brand img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .brand span.badge { background: linear-gradient(135deg, var(--primary), #8b5cf6); font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; }
+    nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    nav a { padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; background: var(--surface-2); border: 1px solid var(--border); transition: 0.2s; }
+    nav a.active, nav a:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    .container { max-width: 1280px; margin: 30px auto; padding: 0 20px; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    p.sub { color: var(--muted); margin-bottom: 24px; }
+
+    .hunter-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px; outline: none; }
+    .btn-search { background: var(--accent); color: #042f2e; font-weight: 700; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; }
+
+    .leads-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; }
+    .badge-verified { background: rgba(16, 185, 129, 0.15); color: var(--accent); padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; }
+    .btn-copy { background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.png" alt="Logo" onerror="this.style.display='none'" />
+        Job Hunt <span class="badge">X / PRO</span>
+      </a>
+      <nav>
+        <a href="index.html">🔥 Live Jobs</a>
+        <a href="platforms.html">🌐 100+ Platforms</a>
+        <a href="client-hunter.html" class="active">🎯 Client Hunter Pro</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Client Hunter Pro (X-Ray Lead Tool)</h1>
+    <p class="sub">Find verified external clients from LinkedIn, YouTube channels, and Google Maps instantly.</p>
+
+    <div class="hunter-box">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Target Platform</label>
+          <select id="leadPlatform">
+            <option value="linkedin">LinkedIn Decision Makers</option>
+            <option value="youtube">YouTube Creators & Channels</option>
+            <option value="maps">Google Maps Businesses</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Niche / Skill</label>
+          <input type="text" id="leadNiche" placeholder="e.g. Video Editor, Web Developer" />
+        </div>
+        <div class="form-group">
+          <label>Country / Region</label>
+          <input type="text" id="leadCountry" placeholder="e.g. United States, UK" />
+        </div>
+      </div>
+      <button class="btn-search" onclick="runClientHunter()">🔍 Run Smart X-Ray Search (Unlock)</button>
+    </div>
+
+    <div class="leads-table-wrap">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3>Generated Client Leads</h3>
+        <button class="btn-copy" onclick="alert('🔒 Complete Offerwall ad prompt to copy all leads.')">📋 Copy All Leads</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Company / Channel</th>
+            <th>Platform</th>
+            <th>Target Niche</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="leadTableBody">
+          <tr>
+            <td>MediaStream Pro LLC</td>
+            <td>LinkedIn</td>
+            <td>Video Editor</td>
+            <td>United States</td>
+            <td><span class="badge-verified">Verified 100%</span></td>
+            <td><button class="btn-copy" onclick="alert('Pitch copied!')">Copy Pitch</button></td>
+          </tr>
+          <tr>
+            <td>TechVibe Channel</td>
+            <td>YouTube</td>
+            <td>Thumbnail Designer</td>
+            <td>Canada</td>
+            <td><span class="badge-verified">Verified 100%</span></td>
+            <td><button class="btn-copy" onclick="alert('Pitch copied!')">Copy Pitch</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function runClientHunter() {
+      alert('🔒 Reward Gate: Please watch the quick AdSense Offerwall video prompt to unlock full client lead generation results.');
+    }
+  </script>
+</body>
+</html>
