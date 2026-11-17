@@ -1,67 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Hunt X / Pro — 100+ Platforms Directory</title>
-  <link rel="icon" type="image/png" href="logo.png" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script>
-  <style>
-    :root { --bg: #090d16; --surface: #111827; --surface-2: #1f2937; --primary: #3b82f6; --accent: #10b981; --text: #f3f4f6; --muted: #9ca3af; --border: #374151; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; }
-    header { background: rgba(17, 24, 39, 0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 900; backdrop-filter: blur(10px); }
-    .nav-container { max-width: 1280px; margin: auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
-    .brand { font-size: 1.4rem; font-weight: 800; color: #fff; }
-    nav { display: flex; gap: 10px; }
-    nav a { padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; background: var(--surface-2); border: 1px solid var(--border); }
-    nav a.active, nav a:hover { background: var(--primary); color: #fff; }
-    .container { max-width: 1280px; margin: 30px auto; padding: 0 20px; }
-    h1 { font-size: 2.2rem; margin-bottom: 8px; }
-    p.sub { color: var(--muted); margin-bottom: 24px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-    .card h3 { margin-bottom: 6px; color: #fff; }
-    .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 14px; }
-    .card a { display: inline-block; background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="nav-container">
-      <div class="brand">Job Hunt X / Pro</div>
-      <nav>
-        <a href="index.html">🔥 Live Jobs</a>
-        <a href="platforms.html" class="active">🌐 100+ Platforms</a>
-        <a href="client-hunter.html">🎯 Client Hunter Pro</a>
-      </nav>
-    </div>
-  </header>
-  <div class="container">
-    <h1>100+ Global Platforms Directory</h1>
-    <p class="sub">Complete directory of verified freelance and remote work marketplaces worldwide.</p>
-    <div class="grid">
-      <div class="card">
-        <h3>Upwork</h3>
-        <p>Leading global marketplace for professional freelance contracts and remote employment.</p>
-        <a href="https://www.upwork.com" target="_blank">Visit Platform ↗</a>
-      </div>
-      <div class="card">
-        <h3>Fiverr</h3>
-        <p>Gig marketplace for video editing, design, SEO, and digital marketing services.</p>
-        <a href="https://www.fiverr.com" target="_blank">Visit Platform ↗</a>
-      </div>
-      <div class="card">
-        <h3>Freelancer.com</h3>
-        <p>Massive global crowdsourcing network connecting clients with independent talent.</p>
-        <a href="https://www.freelancer.com" target="_blank">Visit Platform ↗</a>
-      </div>
-      <div class="card">
-        <h3>PeoplePerHour</h3>
-        <p>Hourly and fixed-price remote contracts for international businesses and experts.</p>
-        <a href="https://www.peopleperhour.com" target="_blank">Visit Platform ↗</a>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title></head>
+<body data-page="plat"><main class="wrap"><h1 style="margin-top:28px">Platform directory</h1><p class="m"><span id="pc"></span> freelance and job platforms. Type a skill to search a platform directly.</p>
+<div class="mq" aria-hidden="true"><div id="mq"></div></div><div data-ad="banner"></div>
+<div class="row"><div><label for="q">Your skill</label><input id="q" placeholder="e.g. video editing"></div><div><label for="n">Find a platform</label><input id="n" placeholder="Name"></div><div><label for="c">Category</label><select id="c"><option value="">All categories</option></select></div></div>
+<p id="st" class="note" aria-live="polite"></p><div id="out" class="grid"></div>
+<div data-ad="article"></div><div data-ad="tall"></div><p class="m s" style="margin-top:14px">Platforms without a known search link open a Google search limited to that website.</p></main>
+<script>
+$('#pc').textContent=P.length;{const h=P.map(x=>'<span>'+esc(x.n)+'</span>').join('');$('#mq').innerHTML=h+h}CATS.forEach(c=>$('#c').insertAdjacentHTML('beforeend','<option>'+esc(c)+'</option>'));
+function draw(){const n=$('#n').value.trim().toLowerCase(),c=$('#c').value,q=$('#q').value;
+ const L=P.filter(p=>(!c||p.c==c)&&(!n||p.n.toLowerCase().includes(n)));
+ $('#st').textContent=L.length+' platforms shown';
+ $('#out').innerHTML=L.map(p=>'<article class="card"><h3>'+esc(p.n)+'</h3><p><span class="tag">'+esc(p.c)+'</span></p><p class="m s">'+esc(p.d)+'</p><a class="btn" href="'+esc(searchUrl(p,q))+'" target="_blank" rel="noopener noreferrer">'+(q.trim()?'Search "'+esc(q.trim())+'"':'Visit website')+'</a></article>').join('');}
+['q','n','c'].forEach(i=>$('#'+i).addEventListener('input',draw));draw();
+</script></body></html>
