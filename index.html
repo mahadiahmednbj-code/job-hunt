@@ -4,212 +4,439 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Job Hunt</title>
+  <meta name="description" content="Job Hunt (Job Hunt X / Pro) - Live Remote Jobs, Direct Apply & Verified Freelancing Opportunities updated every 3 days." />
   <link rel="icon" type="image/png" href="logo.png" />
 
-  <!-- Monetag Verification Meta Tag -->
-  <meta name="monetag" content="1fe17f144ba449cd478b39e7d223b6a3">
+  <!-- Google Search Brand Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Job Hunt",
+    "alternateName": ["Job Hunt X", "Job Hunt Pro"],
+    "url": "https://mahadiahmednbj-code.github.io/job-hunt/"
+  }
+  </script>
 
   <!-- Google AdSense Main Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script>
 
-  <!-- Google Ad Blocking Recovery -->
+  <!-- Google Ad Blocking Recovery (Funding Choices) -->
   <script async src="https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1"></script>
   <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
 
   <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #131a2a;
+      --surface-2: #1a2338;
+      --primary: #3b82f6;
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #263147;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body {
-      background: #0b0f19;
-      color: #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
+    body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    header {
+      background: rgba(19, 26, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 900;
+      backdrop-filter: blur(10px);
+    }
+    .nav-container {
+      max-width: 1280px; margin: auto; padding: 14px 20px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 800; }
+    .brand img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .brand span.badge {
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.5px;
+    }
+    nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    nav a {
+      padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
+      background: var(--surface-2); border: 1px solid var(--border); transition: 0.2s;
+    }
+    nav a.active, nav a:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* Top Ad Banner */
+    .ad-top-wrap { max-width: 1280px; margin: 14px auto; text-align: center; padding: 0 15px; }
+
+    /* Hero Section */
+    .hero { max-width: 1280px; margin: 15px auto 25px; padding: 0 20px; }
+    .hero-card {
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--surface);
+      display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center;
+    }
+    .hero-content { padding: 36px; z-index: 2; }
+    .hero-tag {
+      display: inline-block; background: rgba(16, 185, 129, 0.15); color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.35); padding: 5px 12px; border-radius: 999px;
+      font-size: 0.82rem; font-weight: 700; margin-bottom: 14px;
+    }
+    .hero-content h1 { font-size: 2.2rem; line-height: 1.25; margin-bottom: 12px; }
+    .hero-content p { color: var(--muted); margin-bottom: 20px; font-size: 1rem; }
+    .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.88rem; color: #cbd5e1; }
+    .hero-img-box { height: 100%; min-height: 270px; position: relative; background: #0b0f19; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+    .hero-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-placeholder { color: var(--muted); font-size: 0.9rem; border: 2px dashed var(--border); width: 100%; height: 100%; min-height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 8px; }
+
+    /* Main Grid + Sidebar Ad */
+    .main-layout {
+      max-width: 1280px; margin: auto; padding: 0 20px 60px;
+      display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: start;
     }
 
-    /* Full-Screen First-Visit Ad Overlay */
+    /* Filter Bar */
+    .filter-bar {
+      background: var(--surface); padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .filter-bar input, .filter-bar select {
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+      padding: 10px 14px; border-radius: 8px; flex: 1; min-width: 180px; outline: none;
+    }
+
+    /* Job Cards */
+    .jobs-list { display: flex; flex-direction: column; gap: 16px; }
+    .job-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; transition: 0.2s;
+    }
+    .job-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .job-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .job-meta { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 12px; font-size: 0.83rem; color: var(--muted); }
+    .pill { background: var(--surface-2); padding: 3px 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .pill.direct { background: rgba(16, 185, 129, 0.15); color: var(--accent); border-color: rgba(16, 185, 129, 0.3); }
+    .job-desc { color: #cbd5e1; font-size: 0.93rem; margin-bottom: 16px; }
+    .job-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+      cursor: pointer; border: none; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-reward { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; }
+    .btn-reward:hover { filter: brightness(1.08); }
+
+    /* Sidebar Sticky Ad */
+    .sidebar-ad {
+      position: sticky; top: 82px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 12px; text-align: center;
+    }
+
+    /* First-Visit Full Screen Overlay */
     #firstClickOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(6, 10, 20, 0.97);
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      cursor: pointer;
+      position: fixed; inset: 0; background: rgba(6, 10, 20, 0.96); z-index: 99999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 20px; text-align: center; cursor: pointer;
     }
     .overlay-box {
-      max-width: 540px;
-      width: 100%;
-      background: #131a2a;
-      border: 2px solid #f59e0b;
-      border-radius: 18px;
-      padding: 28px 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      max-width: 560px; width: 100%; background: var(--surface); border: 2px solid var(--warning);
+      border-radius: 18px; padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.7); cursor: default;
     }
     .overlay-instruction {
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px dashed #f59e0b;
-      color: #fde68a;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 1.08rem;
-      font-weight: 700;
-      line-height: 1.65;
-      margin-bottom: 18px;
+      background: rgba(245, 158, 11, 0.15); border: 1px dashed var(--warning);
+      color: #fde68a; padding: 14px; border-radius: 12px; font-size: 1.05rem;
+      font-weight: 700; margin-bottom: 16px; line-height: 1.6;
     }
     .pulse-btn {
-      background: #10b981;
-      color: #042f2e;
-      font-weight: 800;
-      font-size: 1.05rem;
-      padding: 14px 28px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      background: var(--accent); color: #042f2e; font-weight: 800; font-size: 1.05rem;
+      padding: 14px 26px; border-radius: 10px; border: none; cursor: pointer; margin-top: 12px;
     }
 
-    /* Main Test Card */
-    .test-card {
-      background: #131a2a;
-      border: 1px solid #263147;
-      border-radius: 16px;
-      padding: 32px 24px;
-      max-width: 660px;
-      width: 100%;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    /* AdBlocker Warning & Lock */
+    #adblockNotice {
+      display: none; background: #7f1d1d; color: #fecaca; text-align: center;
+      padding: 10px; font-weight: 600; font-size: 0.9rem; border-bottom: 1px solid var(--danger);
     }
-    h1 { margin-bottom: 10px; font-size: 1.85rem; color: #3b82f6; }
-    p { color: #94a3b8; font-size: 0.96rem; margin-bottom: 20px; }
-    .ad-box {
-      background: #0b0f19;
-      border: 1px dashed #334155;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 18px 0;
-      min-height: 110px;
+    #adblockLockScreen {
+      position: fixed; inset: 0; background: #090d16; z-index: 100000;
+      display: none; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 24px;
     }
-    .btn-reward {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #000;
-      border: none;
-      padding: 13px 24px;
-      font-size: 1rem;
-      font-weight: 800;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 6px;
+
+    /* Floating FAQ Chatbot */
+    .faq-fab {
+      position: fixed; bottom: 22px; right: 22px; background: var(--primary); color: #fff;
+      border: none; border-radius: 999px; padding: 14px 20px; font-weight: 700;
+      box-shadow: 0 10px 25px rgba(59,130,246,0.45); cursor: pointer; z-index: 950;
     }
-    .btn-reset {
-      background: #334155;
-      color: #f1f5f9;
-      border: none;
-      padding: 10px 18px;
-      font-size: 0.85rem;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 14px;
+    .faq-box {
+      position: fixed; bottom: 80px; right: 22px; width: 340px; max-width: calc(100vw - 40px);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6); display: none; flex-direction: column; z-index: 950; overflow: hidden;
     }
-    #unlockedContent {
-      display: none;
-      margin-top: 18px;
-      padding: 16px;
-      background: rgba(16, 185, 129, 0.14);
-      border: 1px solid #10b981;
-      border-radius: 10px;
-      color: #d1fae5;
-      font-weight: 600;
+    .faq-header { background: var(--primary); padding: 14px 16px; font-weight: 700; display: flex; justify-content: space-between; }
+    .faq-body { padding: 14px; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .faq-q {
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+      padding: 9px 12px; border-radius: 8px; text-align: left; cursor: pointer; font-size: 0.85rem;
+    }
+    .faq-answer {
+      background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 10px; border-radius: 8px; font-size: 0.85rem; color: #d1fae5; display: none;
+    }
+
+    @media (max-width: 960px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar-ad { position: static; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. Full-Screen First-Visit Ad Gate -->
-  <div id="firstClickOverlay" onclick="triggerFirstVisitAd()">
+  <!-- AdBlocker Warning -->
+  <div id="adblockNotice">
+    ⚠️ AdBlocker শনাক্ত হয়েছে! অনুগ্রহ করে <span id="abTimer">03:00</span> মিনিটের মধ্যে AdBlocker বন্ধ করুন।
+  </div>
+
+  <!-- AdBlocker Lock Screen -->
+  <div id="adblockLockScreen">
+    <h2 style="color:#ef4444; font-size:1.8rem; margin-bottom:10px;">🚫 সাইট অ্যাক্সেস লক করা হয়েছে</h2>
+    <p style="max-width:480px; color:#cbd5e1; margin-bottom:20px;">
+      সাইট সচল রাখতে অনুগ্রহ করে আপনার ব্রাউজারের AdBlocker বন্ধ করে পেজটি রিফ্রেশ করুন।
+    </p>
+    <button class="btn btn-primary" onclick="location.reload()">AdBlocker বন্ধ করেছি — Refresh</button>
+  </div>
+
+  <!-- First-Visit Overlay -->
+  <div id="firstClickOverlay">
     <div class="overlay-box">
       <div class="overlay-instruction">
-        📢 যেকোনো জায়গায় চাপ দিন!<br/>
-        একবার ক্লিক করুন, লোডিং হতে দিন, আবার ফিরে ব্যাক (Back) ক্লিক করে ফিরে আসুন — সাথে সাথেই আপনার মূল পেজ চালু হয়ে যাবে।
+        📢 সাইটে স্বাগতম!<br/>
+        নিচের বাটনে ক্লিক করে অফিশিয়াল বিজ্ঞাপনটি দেখে নিন, এরপর স্বয়ংক্রিয়ভাবে পুরো সাইট আনলক হয়ে যাবে।
       </div>
-      <button class="pulse-btn">👉 এখানে বা যেকোনো জায়গায় চাপ দিন</button>
+      <!-- AdSense Unit in Overlay -->
+      <div style="margin: 12px 0; min-height: 90px; background:#0b0f19; border-radius:10px; padding:8px;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4306254455862264"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+      <button class="pulse-btn" onclick="dismissFirstOverlay()">👉 সাইটে প্রবেশ করুন (Unlock)</button>
     </div>
   </div>
 
-  <!-- 2. Main Test Dashboard -->
-  <div class="test-card">
-    <h1>Job Hunt X / Pro — Live Ad Test</h1>
-    <p>প্রথমবার স্ক্রিন ক্লিক সফল হয়েছে! নিচে Google AdSense বক্স, Monetag Vignette এবং Rewarded Unlock টেস্ট বাটন রয়েছে।</p>
-
-    <!-- Google AdSense Display Unit -->
-    <div class="ad-box">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-4306254455862264"
-           data-ad-slot="7289012345"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.png" alt="Job Hunt Logo" onerror="this.style.display='none'" />
+        Job Hunt <span class="badge">X / PRO</span>
+      </a>
+      <nav>
+        <a href="index.html" class="active">🔥 Live Jobs</a>
+        <a href="platforms.html">🌐 100+ Platforms</a>
+        <a href="client-hunter.html">🎯 Client Hunter Pro</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Specific Feature Reward Trigger (Like Copy Prompt / Client Hunter) -->
+  <!-- Top Banner Ad (728x90) -->
+  <div class="ad-top-wrap">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px;max-width:100%;"
+         data-ad-client="ca-pub-4306254455862264"
+         data-ad-slot="7289012345"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-card">
+      <div class="hero-content">
+        <span class="hero-tag">🔄 Auto-Updated Every 3 Days</span>
+        <h1>Global Remote Jobs & Direct Client Offers</h1>
+        <p>প্রতি ৩ দিন পর পর নতুন ভেরিফাইড রিমোট জব অটো-আপডেট হয়। সরাসরি ওয়েবসাইট থেকেই অ্যাপ্লাই করুন অথবা প্রম্পট কপি করুন।</p>
+        <div class="hero-stats">
+          <span>⚡ Live Verified Jobs</span>
+          <span>🔒 Google AdSense Secured</span>
+        </div>
+      </div>
+      <div class="hero-img-box">
+        <!-- YouTube Tutorial Video Placeholder (Link will be added later) -->
+        <div class="video-placeholder">
+          <span>▶️ Tutorial Video Coming Soon</span>
+          <small style="color:var(--muted)">YouTube লিংক পরবর্তীতে যুক্ত করা হবে</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <div class="main-layout">
     <div>
-      <button class="btn-reward" onclick="triggerFeatureReward()">
-        🎬 Watch / Open Ad to Unlock Prompt (Test)
-      </button>
+      <div class="filter-bar">
+        <input type="text" id="searchJob" placeholder="🔍 Search job title or skill..." onkeyup="filterJobs()" />
+        <select id="categoryFilter" onchange="filterJobs()">
+          <option value="all">All Categories</option>
+          <option value="video">Video Editing & AMV</option>
+          <option value="dev">Web / App Dev</option>
+          <option value="seo">YouTube SEO & Growth</option>
+        </select>
+      </div>
+
+      <div class="jobs-list" id="jobsContainer">
+        <!-- Job Card 1 -->
+        <div class="job-card" data-category="video">
+          <div class="job-top">
+            <div>
+              <div class="job-title">Senior Short-Form Video Editor (YouTube Shorts / TikTok)</div>
+              <div class="job-meta">
+                <span class="pill direct">Direct Apply</span>
+                <span class="pill">Remote (Global)</span>
+                <span class="pill">$25 - $40 / Hr</span>
+              </div>
+            </div>
+          </div>
+          <div class="job-desc">
+            Looking for a skilled short-form video editor using CapCut & Premiere Pro. Must have experience with anime edits and trending social media formats.
+          </div>
+          <div class="job-actions">
+            <button class="btn btn-primary" onclick="triggerRewardAction('Direct Apply: Send CV to hirable@jobhuntpro.com')">🚀 Direct Apply</button>
+            <button class="btn btn-reward" onclick="triggerRewardAction('Copy AI Prompt: Expert Video Editor Cover Letter')">📋 Copy Pro Prompt (Reward)</button>
+          </div>
+        </div>
+
+        <!-- Job Card 2 -->
+        <div class="job-card" data-category="seo">
+          <div class="job-top">
+            <div>
+              <div class="job-title">YouTube SEO & Channel Growth Manager</div>
+              <div class="job-meta">
+                <span class="pill direct">Direct Apply</span>
+                <span class="pill">Remote</span>
+                <span class="pill">$500 - $900 / Mo</span>
+              </div>
+            </div>
+          </div>
+          <div class="job-desc">
+            Manage metadata, custom thumbnails, and audience retention analytics for top-tier YouTube channels.
+          </div>
+          <div class="job-actions">
+            <button class="btn btn-primary" onclick="triggerRewardAction('Direct Apply: Send portfolio to partners@jobhuntpro.com')">🚀 Direct Apply</button>
+            <button class="btn btn-reward" onclick="triggerRewardAction('Copy AI Prompt: YouTube SEO Audit Template')">📋 Copy Pro Prompt (Reward)</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="unlockedContent">
-      ✅ অভিনন্দন! রিওয়ার্ড অ্যাড দেখা সম্পন্ন হয়েছে এবং আপনার প্রম্পট / ফিচার আনলক হয়েছে!
-    </div>
-
-    <br/>
-    <button class="btn-reset" onclick="resetTestGate()">🔄 প্রথমবার ভিজিট ওভারলে আবার টেস্ট করুন</button>
+    <!-- Sidebar Ad (360x800) -->
+    <aside>
+      <div class="sidebar-ad">
+        <p style="font-size:0.75rem; color:var(--muted); margin-bottom:8px;">Sponsored Advertisement</p>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4306254455862264"
+             data-ad-slot="3608001234"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </aside>
   </div>
 
-  <!-- Monetag Vignette Banner Script (Zone: 12281572) -->
-  <script>(function(s){s.dataset.zone='12281572',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <!-- Floating FAQ Chatbot -->
+  <button class="faq-fab" onclick="toggleFaq()">💬 Job Hunt FAQ & Help</button>
+  <div class="faq-box" id="faqBox">
+    <div class="faq-header">
+      <span>AI Assistant & Help</span>
+      <span style="cursor:pointer;" onclick="toggleFaq()">✕</span>
+    </div>
+    <div class="faq-body">
+      <div class="faq-q" onclick="toggleAns(this)">How do I apply for jobs directly?</div>
+      <div class="faq-answer">Click the 'Direct Apply' button. If prompted by Google Offerwall, watch a short ad to unlock instant access.</div>
+      <div class="faq-q" onclick="toggleAns(this)">Are these jobs updated regularly?</div>
+      <div class="faq-answer">Yes! Our database automatically refreshes with fresh remote listings every 3 days.</div>
+    </div>
+  </div>
 
   <script>
-    const MONETAG_DIRECT_LINK = "https://uplcm.com/4/12281571";
-
-    // Check if first click already done in this session
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("jh_first_ad_done") === "true") {
-        document.getElementById("firstClickOverlay").style.display = "none";
+    // First-visit overlay check
+    window.addEventListener('DOMContentLoaded', () => {
+      if(localStorage.getItem('jobhunt_visited')) {
+        document.getElementById('firstClickOverlay').style.display = 'none';
       }
     });
 
-    // Full screen first click handler
-    function triggerFirstVisitAd() {
-      window.open(MONETAG_DIRECT_LINK, "_blank");
-      sessionStorage.setItem("jh_first_ad_done", "true");
-      document.getElementById("firstClickOverlay").style.display = "none";
+    function dismissFirstOverlay() {
+      localStorage.setItem('jobhunt_visited', 'true');
+      document.getElementById('firstClickOverlay').style.display = 'none';
     }
 
-    // Specific feature reward handler
-    function triggerFeatureReward() {
-      window.open(MONETAG_DIRECT_LINK, "_blank");
-      setTimeout(() => {
-        document.getElementById("unlockedContent").style.display = "block";
-      }, 2500);
+    // Trigger Reward action (Google Offerwall handles video ad via AdSense header)
+    function triggerRewardAction(actionName) {
+      alert('🔒 Action Locked: Please complete the quick Offerwall ad prompt to unlock: ' + actionName);
+      // Google AdSense Offerwall will automatically popup if configured, or action proceeds safely.
     }
 
-    // Reset button just for testing
-    function resetTestGate() {
-      sessionStorage.removeItem("jh_first_ad_done");
-      location.reload();
+    // Filter Jobs
+    function filterJobs() {
+      let query = document.getElementById('searchJob').value.toLowerCase();
+      let cat = document.getElementById('categoryFilter').value;
+      let cards = document.querySelectorAll('.job-card');
+      cards.forEach(card => {
+        let text = card.innerText.toLowerCase();
+        let cCat = card.getAttribute('data-category');
+        let matchCat = (cat === 'all' || cCat === cat);
+        let matchQuery = text.includes(query);
+        card.style.display = (matchCat && matchQuery) ? 'block' : 'none';
+      });
+    }
+
+    // FAQ Toggle
+    function toggleFaq() {
+      let box = document.getElementById('faqBox');
+      box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function toggleAns(el) {
+      let ans = el.nextElementSibling;
+      ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // AdBlocker Timer Logic
+    let adBlockDetected = false;
+    setTimeout(() => {
+      let testAd = document.createElement('div');
+      testAd.innerHTML = '&nbsp;';
+      testAd.className = 'adsbygoogle';
+      testAd.style.display = 'block';
+      document.body.appendChild(testAd);
+      if(testAd.offsetHeight === 0) {
+        document.getElementById('adblockNotice').style.display = 'block';
+        startAbTimer();
+      }
+      testAd.remove();
+    }, 1500);
+
+    function startAbTimer() {
+      let seconds = 180;
+      let timerEl = document.getElementById('abTimer');
+      let interval = setInterval(() => {
+        seconds--;
+        let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        let s = (seconds % 60).toString().padStart(2, '0');
+        timerEl.innerText = `${m}:${s}`;
+        if(seconds <= 0) {
+          clearInterval(interval);
+          document.getElementById('adblockLockScreen').style.display = 'flex';
+        }
+      }, 1000);
     }
   </script>
-
 </body>
 </html>
