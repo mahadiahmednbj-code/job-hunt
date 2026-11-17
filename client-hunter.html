@@ -1,35 +1,37 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title></head>
-<body data-page="hunt" data-t="Client Hunter" data-d="Search live client job posts, then open the same search on every platform and on public sources."><main class="wrap"><div data-ad="banner"></div>
-<form id="f"><div class="row"><div><label for="q">Skill or service</label><input id="q" placeholder="e.g. video editor" required></div><div><label for="co">Country or location</label><input id="co" placeholder="e.g. USA, Worldwide"></div><div><label for="jt">Job type</label><select id="jt"><option value="">Any</option><option>full time</option><option>contract</option><option>part time</option><option>freelance</option><option>internship</option></select></div></div>
-<div class="row"><div><label for="mb">Minimum budget (USD per year)</label><input id="mb" type="number" min="0" placeholder="e.g. 20000"></div><div><label for="xb">Maximum budget (USD per year)</label><input id="xb" type="number" min="0" placeholder="e.g. 100000"></div><div><label for="c">Platform category</label><select id="c"><option value="">All categories</option></select></div></div>
-<div class="row"><div style="align-self:center"><label style="font-weight:400"><input id="np" type="checkbox" checked style="width:auto"> Include jobs with no listed pay</label></div><div><button class="btn" style="width:100%">Find clients</button></div></div></form>
-<p id="st" class="note" aria-live="polite">Enter a skill and press Find clients.</p>
-<h2>Live client job posts</h2><div id="jobs" class="grid"></div><div data-ad="article"></div>
-<h2>Find clients on public sources</h2><p class="m s">Opens public searches in a new tab. Job Hunt does not collect private emails or contact details.</p><div id="src" class="grid"></div>
+<body data-page="hunt" data-t="Client Hunter" data-d="Find up to 100 more jobs that are not on the Jobs page. Tick the kind of work you want.">
+<main class="wrap"><div data-ad="banner"></div>
+<form id="f"><h2 style="margin-top:0">What kind of work do you want?</h2><div class="chk" id="wt"></div>
+<div class="row"><div><label for="q">Keyword (optional)</label><input id="q" placeholder="e.g. video editor"></div><div><label for="co">Location</label><input id="co" placeholder="e.g. Remote, Germany"></div><div><label for="jt">Job type</label><select id="jt"><option value="">Any</option><option value="fulltime">Full time</option><option value="parttime">Part time</option><option value="contract">Contract</option><option value="freelance">Freelance</option><option value="internship">Internship</option></select></div></div>
+<div class="row"><div><label for="mb">Minimum budget (USD per year)</label><input id="mb" type="number" min="0" placeholder="e.g. 20000"></div><div><label for="xb">Maximum budget (USD per year)</label><input id="xb" type="number" min="0" placeholder="e.g. 100000"></div><div style="align-self:center"><label style="font-weight:400;display:flex;gap:6px;align-items:center"><input id="np" type="checkbox" checked style="width:auto"> Include jobs with no listed pay</label></div></div>
+<div class="row"><div><label for="c">Platform category (for the search links below)</label><select id="c"><option value="">All categories</option></select></div><div style="align-self:end"><button class="btn" style="width:100%">Find jobs</button></div></div></form>
+<div id="ld" class="ld" hidden><span class="sp"></span>Searching all sources...</div>
+<p id="st" class="note" aria-live="polite">Tick the kind of work and press Find jobs.</p>
+<h2>New jobs for you</h2><div id="jobs" class="grid"></div><div data-ad="article"></div>
+<h2>Find clients on public sources</h2><p class="m s">Opens public searches in a new tab. Job Hunt does not collect private emails, phone numbers or reviews.</p><div id="src" class="grid"></div>
 <h2>Search the same skill on platforms</h2><div id="pl" class="grid"></div></main>
 <script>
+const TY={'Video & Animation':/video|animat|motion|film|youtube|editor|reel/,'Design':/design|ui|ux|graphic|figma|illustrat|brand|creative/,'Development':/develop|engineer|software|frontend|front-end|backend|python|javascript|react|devops|android|ios|web|programm|php|java|node/,'Marketing & Sales':/market|seo|sales|growth|social media|ads|affiliate|brand|account/,'Writing & Translation':/writ|copy|translat|editor|content|journal|blog|proofread/,'Support & Admin':/support|customer|admin|assistant|virtual|data entry|success|service/,'Data & AI':/data|analy|machine|\bai\b|\bml\b|scien|bi\b/};
+$('#wt').innerHTML=Object.keys(TY).map(k=>'<label><input type="checkbox" value="'+esc(k)+'"> '+esc(k)+'</label>').join('');
 CATS.forEach(c=>$('#c').insertAdjacentHTML('beforeend','<option>'+esc(c)+'</option>'));
 const lk=(n,d,u)=>'<article class="card"><h3>'+esc(n)+'</h3><p class="m s">'+esc(d)+'</p><a class="btn o" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Open search</a></article>';
-$('#f').onsubmit=async e=>{e.preventDefault();const q=$('#q').value.trim(),co=$('#co').value.trim(),lo=co.toLowerCase(),jt=$('#jt').value,mb=+$('#mb').value||0,xb=+$('#xb').value||0,c=$('#c').value,np=$('#np').checked;
- const qc=encodeURIComponent((q+' '+co).trim()),g=x=>'https://www.google.com/search?q='+encodeURIComponent(x);
- $('#st').textContent='Searching...';$('#jobs').innerHTML='';
- $('#src').innerHTML=[
-  ['Google Maps businesses','Local businesses that may need your service','https://www.google.com/maps/search/'+qc],
-  ['LinkedIn people','Decision makers and founders','https://www.linkedin.com/search/results/people/?keywords='+qc],
-  ['LinkedIn companies','Companies in your niche','https://www.linkedin.com/search/results/companies/?keywords='+qc],
-  ['YouTube channels','Creators who may need '+q,'https://www.youtube.com/results?search_query='+qc+'&sp=EgIQAg%253D%253D'],
-  ['Reddit hiring posts','People asking for '+q,'https://www.reddit.com/search/?q='+encodeURIComponent('hiring '+q+' '+co)],
-  ['X (Twitter) posts','Recent hiring posts','https://x.com/search?q='+encodeURIComponent('hiring '+q+' '+co)+'&f=live'],
-  ['Fiverr buyer requests and reviews','Google search limited to fiverr.com',g('site:fiverr.com '+q+' '+co+' reviews')],
-  ['Upwork client posts','Google search limited to upwork.com',g('site:upwork.com '+q+' '+co+' client looking for')]
- ].map(x=>lk(x[0],x[1],x[2])).join('');
- $('#pl').innerHTML=P.filter(p=>!c||p.c==c).map(p=>'<article class="card"><h3>'+esc(p.n)+'</h3><p><span class="tag">'+esc(p.c)+'</span></p><a class="btn o" href="'+esc(searchUrl(p,(q+' '+co).trim()))+'" target="_blank" rel="noopener noreferrer">Search on '+esc(p.n)+'</a></article>').join('');
- try{let L=await getRemotive(q);
-  if(lo)L=L.filter(j=>(j.l||'').toLowerCase().includes(lo));
-  if(jt)L=L.filter(j=>(j.y||'').toLowerCase()==jt);
-  if(mb||xb)L=L.filter(j=>{if(!j.s)return np;const v=topPay(j.s);return v>=mb&&(!xb||v<=xb)});
-  $('#jobs').innerHTML=L.map(jobCard).join('');
-  $('#st').textContent=L.length+' live job posts found. Public sources and platform searches are listed below.';
- }catch(x){$('#st').textContent='Could not load live jobs. Check your internet and try again. The search links below still work.'}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+$('#f').onsubmit=async e=>{e.preventDefault();
+ const sel=[...document.querySelectorAll('#wt input:checked')].map(x=>x.value),qk=$('#q').value.trim(),co=$('#co').value.trim(),lo=co.toLowerCase(),jt=$('#jt').value,mb=+$('#mb').value||0,xb=+$('#xb').value||0,c=$('#c').value,np=$('#np').checked;
+ const q=(qk||sel[0]||'freelance'),qq=(q+' '+co).trim(),qc=encodeURIComponent(qq),g=x=>'https://www.google.com/search?q='+encodeURIComponent(x);
+ $('#ld').hidden=false;$('#st').hidden=true;$('#jobs').innerHTML='';
+ $('#src').innerHTML=[['Google Maps businesses','Local businesses that may need your service','https://www.google.com/maps/search/'+qc],['LinkedIn people','Decision makers and founders','https://www.linkedin.com/search/results/people/?keywords='+qc],['LinkedIn companies','Companies in your niche','https://www.linkedin.com/search/results/companies/?keywords='+qc],['YouTube channels','Creators who may need '+q,'https://www.youtube.com/results?search_query='+qc+'&sp=EgIQAg%253D%253D'],['Reddit hiring posts','People asking for '+q,'https://www.reddit.com/search/?q='+encodeURIComponent('hiring '+qq)],['X (Twitter) posts','Recent hiring posts','https://x.com/search?q='+encodeURIComponent('hiring '+qq)+'&f=live'],['Fiverr buyer requests and reviews','Google search limited to fiverr.com',g('site:fiverr.com '+qq+' reviews')],['Upwork client posts','Google search limited to upwork.com',g('site:upwork.com '+qq+' client looking for')]].map(x=>lk(x[0],x[1],x[2])).join('');
+ $('#pl').innerHTML=P.filter(p=>!c||p.c==c).map(p=>'<article class="card"><h3>'+esc(p.n)+'</h3><p><span class="tag">'+esc(p.c)+'</span></p><a class="btn o" href="'+esc(searchUrl(p,qq))+'" target="_blank" rel="noopener noreferrer">Search on '+esc(p.n)+'</a></article>').join('');
+ let d;try{[d]=await Promise.all([jobsData(),sleep(800)])}catch(x){d=null}
+ $('#ld').hidden=true;$('#st').hidden=false;
+ if(!d){$('#st').textContent='Could not load jobs. Check your internet and try again. The search links below still work.';return}
+ let L=filterQ(d.pool,qk);
+ if(sel.length)L=L.filter(j=>sel.some(k=>TY[k].test((j.t+' '+j.cat).toLowerCase())));
+ if(lo)L=L.filter(j=>(j.l||'').toLowerCase().includes(lo));
+ if(jt)L=L.filter(j=>(j.y||'').toLowerCase().replace(/[^a-z]/g,'').includes(jt));
+ if(mb||xb)L=L.filter(j=>{if(!j.s)return np;const v=topPay(j.s);return v>=mb&&(!xb||v<=xb)});
+ const n=L.length;L=L.slice(0,100);
+ $('#jobs').innerHTML=L.map(j=>jobCard(j,'c')).join('');
+ $('#st').textContent=!d.updated?'The job list is waiting for its first hourly update. Search links below already work.':(n?n+' new jobs found'+(n>100?' (showing the first 100)':'')+' · these are not on the Jobs page · '+ago(d.updated):'No new jobs match. Try fewer filters. Search links are listed below.');
 };
 </script></body></html>
