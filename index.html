@@ -1,35 +1,63 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title><meta name="description" content="Live freelance and remote jobs, updated every hour, plus links to 100+ job platforms."></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title><meta name="description" content="Live freelance and remote jobs, updated every hour, plus links to 100+ job platforms."><meta property="og:title" content="Job Hunt"><meta property="og:description" content="Live freelance and remote jobs, updated every hour."><meta property="og:image" content="logo.png"></head>
 <body data-page="home">
 <section class="hero"><div class="wrap"><div class="pt">Direct Global Freelance &amp; Remote Job Search</div><h1>Find Real Freelance Jobs Across <span>100+ Global Platforms</span></h1><p>Search your skill, pick a platform or search live jobs here. The job list updates every hour.</p>
 <form id="sf" class="gs"><input id="q" placeholder="Search skills (e.g. Video Editing, Thumbnail, Web Design)..." aria-label="Skill"><span class="dv"></span><select id="ps" aria-label="Where to search"></select><button class="btn">Search Jobs ↗</button></form>
 <div class="tr"><span>Trending:</span><button type="button">Video Editing</button><button type="button">Thumbnail</button><button type="button">Reels</button><button type="button">Web Development</button><button type="button">SEO</button><button type="button">Graphic Design</button></div></div></section>
 <div class="wrap"><div data-ad="banner"></div></div>
-<main class="wrap"><h2 id="jobs">Live Jobs</h2><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="n">Post a Job</button></div>
+<main class="wrap"><h2 id="jobs">Live Jobs</h2><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="m">My Jobs</button><button data-t="n">Post a Job</button></div>
+<div id="fb" class="row"><select id="ft" aria-label="Job type"><option value="">Any job type</option><option value="fulltime">Full time</option><option value="parttime">Part time</option><option value="contract">Contract</option><option value="freelance">Freelance</option><option value="internship">Internship</option></select><select id="so" aria-label="Sort"><option value="">Default order</option><option value="new">Newest first</option></select><label style="display:flex;gap:6px;align-items:center;font-weight:400"><input id="fp" type="checkbox" style="width:auto"> Only jobs with pay listed</label></div>
 <div id="st" class="note" aria-live="polite">Loading jobs...</div><div id="out" class="grid"></div><div data-ad="feed"></div>
-<form id="pf" hidden style="max-width:560px"><h2 style="margin-top:0">Post a job</h2><div class="row"><div><label for="pt">Job title</label><input id="pt" required></div><div><label for="pc2">Company or name</label><input id="pc2" required></div></div><div class="row"><div><label for="pb">Budget (optional)</label><input id="pb" placeholder="e.g. 200 USD"></div><div><label for="pu">How to apply (link or email)</label><input id="pu" required></div></div><label for="pd">Details</label><textarea id="pd" rows="4"></textarea><p class="m s" style="margin:8px 0">Posts are saved only in this browser. Other visitors cannot see them until a shared database is added.</p><button class="btn">Publish on this device</button></form>
+<div id="mj" hidden><button class="btn o" id="csv" type="button">Download my jobs (CSV)</button></div>
+<form id="pf" hidden style="max-width:640px"><h2 style="margin-top:0">Post a job</h2>
+<div class="row"><div><label for="pt">Job title</label><input id="pt" required></div><div><label for="pc2">Your name or company</label><input id="pc2" required></div></div>
+<div class="row"><div><label for="pk">Kind of work</label><select id="pk"><option>Video &amp; Animation</option><option>Design</option><option>Development</option><option>Marketing &amp; SEO</option><option>Writing &amp; Translation</option><option>Support &amp; Admin</option><option>Other</option></select></div><div><label for="pb">Budget</label><input id="pb" placeholder="e.g. 200 USD"></div></div>
+<div class="row"><div><label for="pw">Duration or deadline</label><input id="pw" placeholder="e.g. 1 week"></div><div><label for="ps2">Skills needed</label><input id="ps2" placeholder="e.g. Premiere Pro, captions"></div></div>
+<label for="pd">Details</label><textarea id="pd" rows="4" required></textarea>
+<div class="row"><div><label for="pu">How to contact you (link or email)</label><input id="pu"></div></div>
+<label>Where do you want to post? <button type="button" class="btn o" id="all" style="padding:3px 10px;margin-left:8px">Select all</button></label><div class="sites" id="sites"></div>
+<p class="m s" style="margin:8px 0">Other websites do not let us fill their forms. You get one ready text to copy, plus a button that opens each site. The post is also kept on this device.</p><button class="btn">Create my job post</button></form>
+<div id="pr" hidden></div>
 <div data-ad="article"></div></main>
 <script>
-let tab='a',A=[],B=[],err='',U=0;
+let tab='a',D=[],Pst=[],err='',U=0;
+const SITES=['Upwork','Fiverr','Freelancer.com','PeoplePerHour','Guru','Truelancer','Workana','Toptal','99designs','DesignCrowd','crowdSPRING','Behance Jobs','Dribbble Jobs','Indeed','LinkedIn Jobs','We Work Remotely','RemoteOK','ProBlogger Jobs','Contra'];
 $('#ps').innerHTML='<option value="live">Live jobs on Job Hunt</option>'+P.map((p,i)=>'<option value="'+i+'">'+esc(p.n)+'</option>').join('');
+$('#sites').innerHTML=SITES.map(n=>'<label><input type="checkbox" value="'+esc(n)+'"> '+esc(n)+'</label>').join('');
 const mine=()=>{try{return JSON.parse(localStorage.getItem('jh_posts')||'[]')}catch(e){return[]}};
+const cu=u=>!u?'#':/^[\w.+-]+@[\w.-]+$/.test(u)?'mailto:'+u:(/^https?:/.test(u)?u:'https://'+u);
+const dtv=j=>Date.parse(String(j.dt||'').replace(' ','T'))||0;
 function draw(){
- $('#pf').hidden=tab!='n';$('#out').hidden=tab=='n';$('#st').hidden=tab=='n';if(tab=='n')return;
- const q=$('#q').value.trim();
- let L=tab=='a'?A:mine().map(x=>({t:x.t,c:x.c,l:'Posted on this device',cat:'',s:x.b,u:/^[\w.+-]+@[\w.-]+$/.test(x.u)?'mailto:'+x.u:(/^https?:/.test(x.u)?x.u:'https://'+x.u),y:'',src:'this site'})).concat(B);
+ const T=tab;$('#pf').hidden=T!='n';$('#out').hidden=T=='n';$('#st').hidden=T=='n';$('#fb').hidden=(T=='n'||T=='m');$('#mj').hidden=T!='m';if(T!='n')$('#pr').hidden=true;
+ if(T=='n')return;
+ const q=$('#q').value.trim();let L,m=T;
+ if(T=='a')L=D;else if(T=='p')L=mine().map(x=>({t:x.t,c:x.c,l:'Posted on this device',cat:x.k||'',s:x.b,u:cu(x.u),y:'',d:x.d||'',src:'this site',dt:''})).concat(Pst);
+ else{L=Object.values(getSaved()).sort((a,b)=>b.t-a.t).map(x=>x.j);m='a'}
  L=filterQ(L,q);
- $('#out').innerHTML=L.map(jobCard).join('');
- $('#st').textContent=err||(L.length+' jobs shown · '+ago(U)+' · refreshes every hour');
+ if(T!='m'){const ft=$('#ft').value;if(ft)L=L.filter(j=>(j.y||'').toLowerCase().replace(/[^a-z]/g,'').includes(ft));if($('#fp').checked)L=L.filter(j=>j.s);if($('#so').value=='new')L=L.slice().sort((a,b)=>dtv(b)-dtv(a))}
+ $('#out').innerHTML=L.map(j=>jobCard(j,m)).join('');
+ $('#st').textContent=err||(T=='m'?(L.length?L.length+' saved or applied jobs (kept on this device)':'No saved jobs yet. Press Save or Mark applied on any job.'):L.length+' jobs shown · '+ago(U)+' · refreshes every hour');
 }
+function onSaved(){if(tab=='m')draw()}
 async function load(){
  err='';
- try{A=await getRemotive('');B=await getArbeit();U=(await jobsData()).updated}catch(e){A=[];B=[];err='Could not load jobs. Check your internet and try again.'}
+ try{const d=await jobsData();D=d.direct;Pst=d.posts;U=d.updated}catch(e){D=[];Pst=[];err='Could not load jobs. Check your internet and try again.'}
  draw();
 }
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;draw()});
+['ft','so','fp'].forEach(i=>$('#'+i).addEventListener('change',draw));
 function go(){const v=$('#ps').value,q=$('#q').value.trim();if(v==='live'){draw();$('#jobs').scrollIntoView({behavior:'smooth'})}else window.open(searchUrl(P[+v],q||'freelance'),'_blank','noopener,noreferrer')}
 $('#sf').onsubmit=e=>{e.preventDefault();go()};
 $('#q').addEventListener('input',()=>{if($('#ps').value==='live')draw()});
 document.querySelectorAll('.tr button').forEach(b=>b.onclick=()=>{$('#q').value=b.textContent;$('#ps').value='live';go()});
-$('#pf').onsubmit=e=>{e.preventDefault();const a=mine();a.unshift({t:$('#pt').value,c:$('#pc2').value,b:$('#pb').value,u:$('#pu').value.trim()});try{localStorage.setItem('jh_posts',JSON.stringify(a))}catch(x){alert('Could not save in this browser.');return}e.target.reset();document.querySelector('[data-t=p]').click()};
+$('#all').onclick=()=>{const c=[...document.querySelectorAll('#sites input')],on=c.some(x=>!x.checked);c.forEach(x=>x.checked=on);$('#all').textContent=on?'Clear all':'Select all'};
+$('#csv').onclick=()=>{const R=[['Title','Company','Location','Source','Status','Link']].concat(Object.values(getSaved()).map(x=>[x.j.t,x.j.c,x.j.l,x.j.src,x.st,x.j.u]));
+ const t=R.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download='my-jobs.csv';a.click()};
+$('#pf').onsubmit=e=>{e.preventDefault();const f=v=>$(v).value.trim(),sel=[...document.querySelectorAll('#sites input:checked')].map(x=>x.value);
+ if(!sel.length){alert('Please tick at least one site.');return}
+ const txt='Job title: '+f('#pt')+'\nKind of work: '+$('#pk').value+'\nBudget: '+(f('#pb')||'Open to offers')+'\nDuration / deadline: '+(f('#pw')||'Flexible')+'\nSkills needed: '+(f('#ps2')||'-')+'\n\nDetails:\n'+f('#pd')+(f('#pu')?'\n\nContact: '+f('#pu'):'')+'\n\nPosted by: '+f('#pc2');
+ const a=mine();a.unshift({t:f('#pt'),c:f('#pc2'),b:f('#pb'),u:f('#pu'),k:$('#pk').value,d:f('#pd').slice(0,170)});try{localStorage.setItem('jh_posts',JSON.stringify(a))}catch(x){}
+ const url=n=>{if(n=='Freelancer.com')return'https://www.freelancer.com/post-project';const p=P.find(x=>x.n==n);return p?'https://'+p.d:'#'};
+ $('#pr').innerHTML='<h2>Your job post is ready</h2><p class="m">Step 1: copy the text. Step 2: open a site, choose its Post a job option and paste.</p><textarea readonly rows="9">'+esc(txt)+'</textarea><p><button class="btn" data-txt="'+esc(txt)+'" onclick="cp(this)">Copy text</button></p>'+sel.map(n=>'<div class="res"><b>'+esc(n)+'</b><button class="btn o" data-txt="'+esc(txt)+'" onclick="cp(this)">Copy text</button><a class="btn" href="'+esc(url(n))+'" target="_blank" rel="noopener noreferrer">Open '+esc(n)+' ↗</a></div>').join('');
+ $('#pr').hidden=false;$('#pf').hidden=true;$('#pr').scrollIntoView({behavior:'smooth'})};
 load();setInterval(()=>{resetJobs();load()},36e5);
 </script></body></html>
