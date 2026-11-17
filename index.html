@@ -1,32 +1,35 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title><meta name="description" content="Live remote and freelance jobs, plus links to 100+ job platforms."></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="lGB8GUespf3anwGpOH1IYATlTyNpY8ypzTQWcnvbPcw"><meta name="google-adsense-account" content="ca-pub-4306254455862264"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4306254455862264" crossorigin="anonymous"></script><script src="site.js"></script><title>Job Hunt</title><meta name="description" content="Live freelance and remote jobs, updated every hour, plus links to 100+ job platforms."></head>
 <body data-page="home">
-<section class="hero"><div class="wrap"><div><h1>Find freelance and remote work in one place</h1><p class="m" style="margin:12px 0 18px">Live job listings, a directory of <span id="pc"></span> platforms, and a client search tool. Free to use.</p>
-<form id="sf" class="row" style="margin:0"><input id="q" placeholder="Skill, e.g. video editing" aria-label="Skill"><button class="btn">Search jobs</button></form></div>
-<svg viewBox="0 0 320 220" role="img" aria-label="Illustration of a laptop with job cards"><rect x="40" y="30" width="240" height="150" rx="12" fill="#fff" stroke="#16a34a" stroke-width="4"/><rect x="62" y="52" width="110" height="14" rx="7" fill="#16a34a"/><rect x="62" y="78" width="196" height="10" rx="5" fill="#bbf7d0"/><rect x="62" y="98" width="160" height="10" rx="5" fill="#bbf7d0"/><rect x="62" y="124" width="70" height="26" rx="8" fill="#14532d"/><circle cx="240" cy="140" r="22" fill="#86efac"/><path d="M229 140l8 8 15-17" stroke="#14532d" stroke-width="5" fill="none"/><rect x="20" y="186" width="280" height="12" rx="6" fill="#16a34a"/></svg></div></section>
+<section class="hero"><div class="wrap"><div class="pt">Direct Global Freelance &amp; Remote Job Search</div><h1>Find Real Freelance Jobs Across <span>100+ Global Platforms</span></h1><p>Search your skill, pick a platform or search live jobs here. The job list updates every hour.</p>
+<form id="sf" class="gs"><input id="q" placeholder="Search skills (e.g. Video Editing, Thumbnail, Web Design)..." aria-label="Skill"><span class="dv"></span><select id="ps" aria-label="Where to search"></select><button class="btn">Search Jobs ↗</button></form>
+<div class="tr"><span>Trending:</span><button type="button">Video Editing</button><button type="button">Thumbnail</button><button type="button">Reels</button><button type="button">Web Development</button><button type="button">SEO</button><button type="button">Graphic Design</button></div></div></section>
 <div class="wrap"><div data-ad="banner"></div></div>
-<main class="wrap"><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="n">Post a Job</button></div>
+<main class="wrap"><h2 id="jobs">Live Jobs</h2><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="n">Post a Job</button></div>
 <div id="st" class="note" aria-live="polite">Loading jobs...</div><div id="out" class="grid"></div><div data-ad="feed"></div>
-<form id="pf" hidden style="max-width:560px"><h2 style="margin-top:0">Post a job</h2><div class="row"><div><label for="pt">Job title</label><input id="pt" required></div><div><label for="pc2">Company or name</label><input id="pc2" required></div></div><div class="row"><div><label for="pb">Budget (optional)</label><input id="pb" placeholder="e.g. 200 USD"></div><div><label for="pu">How to apply (link or email)</label><input id="pu" required></div></div><label for="pd">Details</label><textarea id="pd" rows="4"></textarea><p class="m s" style="margin:8px 0">Posts are saved only in this browser. Other visitors cannot see them until a shared database is added.</p><button class="btn">Publish on this device</button></form><div data-ad="article"></div></main>
+<form id="pf" hidden style="max-width:560px"><h2 style="margin-top:0">Post a job</h2><div class="row"><div><label for="pt">Job title</label><input id="pt" required></div><div><label for="pc2">Company or name</label><input id="pc2" required></div></div><div class="row"><div><label for="pb">Budget (optional)</label><input id="pb" placeholder="e.g. 200 USD"></div><div><label for="pu">How to apply (link or email)</label><input id="pu" required></div></div><label for="pd">Details</label><textarea id="pd" rows="4"></textarea><p class="m s" style="margin:8px 0">Posts are saved only in this browser. Other visitors cannot see them until a shared database is added.</p><button class="btn">Publish on this device</button></form>
+<div data-ad="article"></div></main>
 <script>
-$('#pc').textContent=P.length;
-let tab='a',A=[],B=[],err='';
+let tab='a',A=[],B=[],err='',U=0;
+$('#ps').innerHTML='<option value="live">Live jobs on Job Hunt</option>'+P.map((p,i)=>'<option value="'+i+'">'+esc(p.n)+'</option>').join('');
 const mine=()=>{try{return JSON.parse(localStorage.getItem('jh_posts')||'[]')}catch(e){return[]}};
 function draw(){
  $('#pf').hidden=tab!='n';$('#out').hidden=tab=='n';$('#st').hidden=tab=='n';if(tab=='n')return;
- const q=$('#q').value.trim().toLowerCase();
+ const q=$('#q').value.trim();
  let L=tab=='a'?A:mine().map(x=>({t:x.t,c:x.c,l:'Posted on this device',cat:'',s:x.b,u:/^[\w.+-]+@[\w.-]+$/.test(x.u)?'mailto:'+x.u:(/^https?:/.test(x.u)?x.u:'https://'+x.u),y:'',src:'this site'})).concat(B);
- if(q)L=L.filter(j=>(j.t+' '+j.c+' '+j.cat).toLowerCase().includes(q));
+ L=filterQ(L,q);
  $('#out').innerHTML=L.map(jobCard).join('');
- $('#st').textContent=err||(L.length+' jobs shown');
+ $('#st').textContent=err||(L.length+' jobs shown · '+ago(U)+' · refreshes every hour');
 }
 async function load(){
- $('#st').textContent='Loading jobs...';err='';
- try{A=await getRemotive($('#q').value.trim())}catch(e){A=[];err='Could not load Direct Apply jobs. Check your internet and try again.'}
- try{B=await getArbeit()}catch(e){B=[];err=err||'Could not load Job Posts. Check your internet and try again.'}
+ err='';
+ try{A=await getRemotive('');B=await getArbeit();U=(await jobsData()).updated}catch(e){A=[];B=[];err='Could not load jobs. Check your internet and try again.'}
  draw();
 }
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;draw()});
-$('#sf').onsubmit=e=>{e.preventDefault();load()};
+function go(){const v=$('#ps').value,q=$('#q').value.trim();if(v==='live'){draw();$('#jobs').scrollIntoView({behavior:'smooth'})}else window.open(searchUrl(P[+v],q||'freelance'),'_blank','noopener,noreferrer')}
+$('#sf').onsubmit=e=>{e.preventDefault();go()};
+$('#q').addEventListener('input',()=>{if($('#ps').value==='live')draw()});
+document.querySelectorAll('.tr button').forEach(b=>b.onclick=()=>{$('#q').value=b.textContent;$('#ps').value='live';go()});
 $('#pf').onsubmit=e=>{e.preventDefault();const a=mine();a.unshift({t:$('#pt').value,c:$('#pc2').value,b:$('#pb').value,u:$('#pu').value.trim()});try{localStorage.setItem('jh_posts',JSON.stringify(a))}catch(x){alert('Could not save in this browser.');return}e.target.reset();document.querySelector('[data-t=p]').click()};
-load();
+load();setInterval(()=>{resetJobs();load()},36e5);
 </script></body></html>
