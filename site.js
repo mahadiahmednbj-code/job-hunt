@@ -141,7 +141,7 @@ function jobCard(j,m){
  const cl='Hello '+j.c+' team,\n\nI am excited to apply for the '+j.t+' role. I have experience in [your main skill] and have completed [number] similar projects. I can start [date] and will share relevant samples on request.\n\nThank you for your time.\n[Your name]';
  const lab=m=='p'?'View post on ':'Apply on ',q=encodeURIComponent(j.c||'');
  const co=m=='c'?`<p class="s"><a href="https://www.google.com/search?q=${q}+official+website" target="_blank" rel="noopener noreferrer">Company website</a> · <a href="https://www.linkedin.com/search/results/companies/?keywords=${q}" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>`:'';
- return `<article class="card"><h3>${isNew(j)?'<span class="tag nw">New</span> ':''}${esc(j.t)}</h3><p class="m">${esc(j.c)}${j.l?' · '+esc(j.l):''}</p><p>${j.cat?`<span class="tag">${esc(j.cat)}</span>`:''}${j.y?`<span class="tag">${esc(j.y)}</span>`:''}${j.s?`<span class="tag pay">${esc(j.s)}</span>`:''}${j.dt?`<span class="tag">${esc(String(j.dt).slice(0,10))}</span>`:''}</p>${j.d?`<p class="pv">${esc(j.d)}</p>`:''}${co}<p class="m s">Source: ${esc(j.src)}</p><a class="btn" href="${esc(j.u)}" target="_blank" rel="noopener noreferrer">${lab}${esc(j.src)}</a><button class="btn o" data-txt="${esc(p)}" onclick="cp(this)">Copy apply prompt</button><button class="btn o" data-txt="${esc(cl)}" onclick="cp(this)">Copy cover letter</button><div class="ac"><button class="btn o" data-k="saved" data-u="${esc(j.u)}" onclick="sv(this,'saved')">${st=='saved'?'★ Saved':'☆ Save'}</button><button class="btn o" data-k="applied" data-u="${esc(j.u)}" onclick="sv(this,'applied')">${st=='applied'?'✓ Applied':'Mark applied'}</button><button class="btn o" data-u="${esc(j.u)}" data-t="${esc(j.t)}" onclick="shr(this)">Share</button></div></article>`;}
+ return `<article class="card"><h3>${isNew(j)?'<span class="tag nw">New</span> ':''}${esc(j.t)}</h3><p class="m">${esc(j.c)}${j.l?' · '+esc(j.l):''}</p><p>${j.cat?`<span class="tag">${esc(j.cat)}</span>`:''}${j.y?`<span class="tag">${esc(j.y)}</span>`:''}${j.s?`<span class="tag pay">${esc(j.s)}</span>`:''}${j.dt?`<span class="tag">${esc(String(j.dt).slice(0,10))}</span>`:''}</p>${j.d?`<p class="pv">${esc(j.d)}</p>`:''}${co}<p class="m s">Source: ${esc(j.src)}</p><a class="btn" href="${esc(j.u)}" target="_blank" rel="noopener noreferrer">${lab}${esc(j.src)}</a><div class="ac"><button class="btn o" data-txt="${esc(p)}" onclick="cp(this)">Copy apply prompt</button><button class="btn o" data-txt="${esc(cl)}" onclick="cp(this)">Copy cover letter</button></div><div class="ac"><button class="btn o" data-k="saved" data-u="${esc(j.u)}" onclick="sv(this,'saved')">${st=='saved'?'★ Saved':'☆ Save'}</button><button class="btn o" data-k="applied" data-u="${esc(j.u)}" onclick="sv(this,'applied')">${st=='applied'?'✓ Applied':'Mark applied'}</button><button class="btn o" data-u="${esc(j.u)}" data-t="${esc(j.t)}" onclick="shr(this)">Share</button></div></article>`;}
 function topPay(s){const n=(String(s).replace(/(\d)k\b/gi,'$1000').match(/\d[\d,]*/g)||[]).map(x=>+x.replace(/,/g,''));return n.length?Math.max(...n):0;}
 const CONTACT='ferdusalommahadi@gmail.com';
 const PUB='ca-pub-4306254455862264';
@@ -257,7 +257,28 @@ h2{display:flex;align-items:center;gap:10px}h2::before{content:"";width:5px;heig
 #intro p{color:#475569;font-size:1.05rem;animation:fup .7s .45s both}
 #intro .pb{width:200px;height:4px;background:#d1fae5;border-radius:4px;margin:24px auto 0;overflow:hidden}
 #intro .pb i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#10b981,#34d399);transform:translateX(-100%);animation:ldb 1.7s .2s ease forwards}
-@keyframes pop{from{opacity:0;transform:scale(.8)}}@keyframes fup{from{opacity:0;transform:translateY(12px)}}@keyframes ring{from{opacity:.8;transform:scale(.92)}to{opacity:0;transform:scale(1.3)}}@keyframes ldb{to{transform:none}}`;
+@keyframes pop{from{opacity:0;transform:scale(.8)}}@keyframes fup{from{opacity:0;transform:translateY(12px)}}@keyframes ring{from{opacity:.8;transform:scale(.92)}to{opacity:0;transform:scale(1.3)}}@keyframes ldb{to{transform:none}}
+h2::before{align-self:stretch;height:auto;min-height:24px;flex:0 0 5px}
+.mb{display:none;background:#fff;border:1px solid var(--l);border-radius:10px;width:42px;height:42px;font-size:1.25rem;color:var(--gd);cursor:pointer;line-height:1}
+.ac .btn{font-size:.82rem;padding:8px 6px}
+body{padding-bottom:76px}
+@media(max-width:820px){
+ header .wrap{flex-wrap:nowrap;min-height:58px;position:relative}
+ .mb{display:block;margin-left:auto}
+ header nav{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--l);box-shadow:0 12px 24px rgba(0,0,0,.1);padding:4px 16px 10px;flex-direction:column}
+ header.open nav{display:flex}
+ header nav a{margin:0;padding:13px 4px;border-bottom:1px solid var(--l)}header nav a:last-child{border-bottom:0}
+ .logo{font-size:1.25rem}.logo img{width:34px;height:34px}
+ .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-left:-16px;margin-right:-16px;padding:0 16px 6px}
+ .tabs::-webkit-scrollbar{display:none}.tabs button{white-space:nowrap;flex:0 0 auto;padding:8px 14px}
+}
+@media(max-width:560px){
+ .row>*{flex:1 1 100%}#fb>*{flex:1 1 140px}#fb label{flex:1 1 100%}
+ h1{font-size:1.9rem}h2{font-size:1.3rem}.hero.sm h1{font-size:1.6rem}.hero{padding:44px 0 40px}
+ .grid{grid-template-columns:1fr}#sm{grid-template-columns:1fr 1fr}#sm .big{font-size:1.3rem}
+ .bb{width:50px;height:50px;right:12px;bottom:12px}.tt{width:40px;height:40px;left:12px;bottom:12px}.bp{right:12px;bottom:72px}
+ .res{flex-direction:column;align-items:stretch}.res .btn{text-align:center}
+}`;
 (function(){
  const st=document.createElement('style');st.textContent=CSS+'html.jh-i{background:#fff}html.jh-i body>*:not(#intro){visibility:hidden}';(document.head||document.documentElement).appendChild(st);
  let want=false;try{want=!sessionStorage.getItem('jh_i')&&!matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){}
@@ -275,7 +296,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   const fc=document.createElement('script');fc.async=true;fc.src='https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1';document.head.appendChild(fc);
   (function sg(){if(!window.frames['googlefcPresent']){if(document.body){const f=document.createElement('iframe');f.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none';f.name='googlefcPresent';document.body.appendChild(f)}else setTimeout(sg,0)}})();
   const pg=document.body.dataset.page,L=[['home','index.html','Jobs'],['plat','platforms.html','Platforms'],['hunt','client-hunter.html','Client Hunter'],['tools','tools.html','Tools'],['dash','dashboard.html','Dashboard'],['learn','learn.html','Learn']];
-  document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html"><img src="logo.png" alt="" onerror="this.style.display='none'">Job <b>Hunt</b></a><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav><span class="badge">${P.length} Platforms</span></div></header>`);
+  document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html"><img src="logo.png" alt="" onerror="this.style.display='none'">Job <b>Hunt</b></a><button class="mb" aria-label="Open menu" aria-expanded="false">☰</button><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav><span class="badge">${P.length} Platforms</span></div></header>`);
+  {const hd=document.querySelector('header');hd.querySelector('.mb').onclick=function(){const o=hd.classList.toggle('open');this.setAttribute('aria-expanded',o);this.textContent=o?'✕':'☰'}}
   if(document.body.dataset.t)document.querySelector('header').insertAdjacentHTML('afterend',`<section class="hero sm"><div class="wrap"><h1>${esc(document.body.dataset.t)}</h1><p>${esc(document.body.dataset.d||'')}</p></div></section>`);
   document.body.insertAdjacentHTML('beforeend',`<footer><div class="wrap"><p>Job Hunt shows live listings from <a href="https://jobicy.com" target="_blank" rel="noopener noreferrer">Jobicy</a>, <a href="https://remoteok.com" target="_blank" rel="noopener noreferrer">Remote OK</a> and <a href="https://www.arbeitnow.com" target="_blank" rel="noopener noreferrer">Arbeitnow</a>, refreshed every hour, and links to ${P.length} freelance and job platforms. Every button opens the original job page. Job Hunt is not affiliated with these websites.</p><p><a href="privacy.html">Privacy Policy</a>${CONTACT?` · <a href="mailto:${CONTACT}">Contact</a>`:''}</p></div></footer>`);
   bot();runAds();
