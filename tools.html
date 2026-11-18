@@ -9,14 +9,20 @@
 <div class="card"><div class="kv"><span>Hourly rate to quote</span><span class="big" id="ro1"></span></div><div class="kv"><span>Day rate (8 hours)</span><b id="ro2"></b></div><div class="kv"><span>Monthly income you must bill</span><b id="ro3"></b></div><p class="m s">Billable hours are only the hours you can charge for. Most freelancers spend part of the day on messages, finding work and admin, so 60 to 100 billable hours a month is common when you start.</p></div></section>
 
 <section id="fee" class="pn" hidden><h2>How much do I keep after platform fees?</h2>
-<div class="row"><div><label for="f1">Price you charge</label><input id="f1" type="number" min="0" value="100"></div><div><label for="f2">Withdrawal fee %</label><input id="f2" type="number" min="0" max="20" step="0.1" value="1"></div><div><label for="f3">I want to keep (to find the price)</label><input id="f3" type="number" min="0" value="100"></div></div>
-<div class="card"><table class="t" id="ft"></table><p class="m s">Typical fees: Fiverr takes 20% from sellers. Upwork's fee is set per contract between 0% and 15% (about 10% is common). Freelancer.com takes 10% or $5, whichever is more. Fees change, so check the platform before you decide.</p></div>
-<div class="card" style="margin-top:10px"><b>Price to charge to keep the amount above</b><table class="t" id="fr"></table></div></section>
+<div class="row"><div><label for="f1">Price you charge</label><input id="f1" type="number" min="0" value="100"></div><div><label for="f2">Withdrawal fee %</label><input id="f2" type="number" min="0" max="20" step="0.1" value="1"></div><div><label for="f3">Amount I want to keep</label><input id="f3" type="number" min="0" value="100"></div></div>
+<div class="row"><div><label for="fq">Find a platform</label><input id="fq" placeholder="Name"></div><div><label for="fc">Category</label><select id="fc"><option value="">All categories</option></select></div><div><label for="fo">Sort by</label><select id="fo"><option value="">Platform list order</option><option value="k">Lowest fee first</option></select></div></div>
+<p id="fn" class="note"></p>
+<div class="card" style="overflow-x:auto"><table class="t" id="ft"></table></div>
+<p class="m s">Fees marked here come from fee comparison websites, not from each platform's own page, and platforms change them often. Type the fee from the platform's page in any box and it is remembered on this device. Job boards such as Indeed or LinkedIn usually charge job seekers nothing, but some sites sell paid memberships, so check before you pay.</p></section>
 
-<section id="cur" class="pn" hidden><h2>Currency converter (your own rate)</h2>
-<p class="m">Type today's rate from your bank or Google. Your last rate is remembered.</p>
-<div class="row"><div><label for="c1">Amount</label><input id="c1" type="number" min="0" value="100"></div><div><label for="c2">1 USD equals (your currency)</label><input id="c2" type="number" min="0" step="0.01" placeholder="e.g. 120"></div><div><label for="c3">Your currency name</label><input id="c3" value="BDT"></div></div>
-<div class="card"><div class="kv"><span id="cl1"></span><span class="big" id="co1"></span></div><div class="kv"><span id="cl2"></span><span class="big" id="co2"></span></div></div></section>
+<section id="cur" class="pn" hidden><h2>Currency converter (world currencies)</h2>
+<p class="m">Live rates for about 160 currencies from countries all over the world. The rate provider updates them once a day.</p>
+<div class="row"><div><label for="c1">Amount</label><input id="c1" type="number" min="0" value="100"></div><div><label for="ca">From</label><select id="ca"></select></div><div style="flex:0 0 auto;align-self:end"><button class="btn o" id="cs" type="button">⇄ Swap</button></div><div><label for="cb">To</label><select id="cb"></select></div></div>
+<div class="row"><div><label for="c2">Use my own rate instead (optional): 1 "From" equals how many "To"?</label><input id="c2" type="number" min="0" step="0.0001" placeholder="Leave empty for the live rate"></div></div>
+<div class="card"><div class="kv"><span id="cl1"></span><span class="big" id="co1"></span></div><div class="kv"><span>Rate</span><b id="cr"></b></div><div class="kv"><span>Rates updated</span><span id="cu" class="m"></span></div><p id="cm" class="m s"></p></div>
+<h3 style="margin:14px 0 6px">Same amount in popular currencies</h3><div class="card" style="overflow-x:auto"><table class="t" id="cp"></table></div>
+<details class="card" style="margin-top:10px"><summary>All currencies</summary><input id="cq" placeholder="Search a country currency or code, e.g. Taka, INR" style="margin:10px 0"><div style="max-height:380px;overflow:auto"><table class="t" id="cx"></table></div></details>
+<p class="m s" style="margin-top:8px">Rates by <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer">Exchange Rate API</a>. These are market rates. Banks and payment services add their own margin, so the amount you receive can be a little lower.</p></section>
 
 <section id="inv" class="pn" hidden><h2>Invoice maker</h2>
 <div class="row"><div><label for="i1">Your name or business</label><input id="i1"></div><div><label for="i2">Client name</label><input id="i2"></div><div><label for="i3">Invoice number</label><input id="i3" value="001"></div></div>
@@ -47,18 +53,43 @@ document.querySelectorAll('#tb button').forEach(b=>b.onclick=()=>{document.query
 function rate(){const f=N('r4')/100,t=N('r3')/100,h=Math.max(1,N('r5'));const gross=(N('r1')/(1-Math.min(t,.9)))+N('r2'),bill=gross/(1-Math.min(f,.9));$('#ro1').textContent=fm(bill/h)+' / hour';$('#ro2').textContent=fm(bill/h*8);$('#ro3').textContent=fm(bill)}
 ['r1','r2','r3','r4','r5'].forEach(i=>$('#'+i).oninput=rate);rate();
 /* fees */
-const PL=[['Fiverr',p=>p*.2],['Upwork (about 10%)',p=>p*.1],['Upwork (15% highest)',p=>p*.15],['Freelancer.com (10% or $5)',p=>Math.max(5,p*.1)]];
-function fees(){const p=N('f1'),w=N('f2')/100,n=N('f3');
- $('#ft').innerHTML='<tr><th>Platform</th><th class="r">Fee</th><th class="r">You keep</th></tr>'+PL.map(x=>{const fe=Math.min(p,x[1](p));return'<tr><td>'+x[0]+'</td><td class="r">'+fm(fe)+'</td><td class="r"><b>'+fm((p-fe)*(1-w))+'</b></td></tr>'}).join('');
- const rows=[['Fiverr',v=>v/(.8*(1-w))],['Upwork (about 10%)',v=>v/(.9*(1-w))],['Upwork (15% highest)',v=>v/(.85*(1-w))],['Freelancer.com (10%)',v=>v/(.9*(1-w))]];
- $('#fr').innerHTML=rows.map(x=>'<tr><td>'+x[0]+'</td><td class="r"><b>'+fm(x[1](n))+'</b></td></tr>').join('')}
-['f1','f2','f3'].forEach(i=>$('#'+i).oninput=fees);fees();
+const FD={'Fiverr':[20,'Flat 20% of seller earnings'],'Upwork':[10,'0% to 15% set per contract, about 10% is common'],'Freelancer.com':[10,'10% or $5, whichever is more'],'Guru':[9,'9% on the free plan, lower with paid plans (5% to 2%)'],'PeoplePerHour':[20,'Starts at 20% and falls to 3.5% as you bill one client more'],'Workana':[10,'Reported between 5% and 15%'],'Contra':[0,'No commission. Payment processing fees may apply'],'Hubstaff Talent':[0,'Free for freelancers'],'Toptal':[0,'No commission taken from freelancer earnings'],'Arc':[0,'No commission for freelancers'],'Gun.io':[0,'No commission for freelancers'],'Braintrust':[0,'No commission for freelancers']};
+let FO=ld('jh_fees',{});
+CATS.forEach(c=>$('#fc').insertAdjacentHTML('beforeend','<option>'+esc(c)+'</option>'));
+const fv=n=>FO[n]!==undefined?FO[n]:(FD[n]?FD[n][0]:'');
+function frow(n,v){const p=N('f1'),w=N('f2')/100,g=N('f3');if(v===''||isNaN(+v))return['—','—'];v=+v;let fe=p*v/100;if(n=='Freelancer.com'&&v==10)fe=Math.max(5,fe);fe=Math.min(p,fe);return[fm((p-fe)*(1-w)),v<100?fm(g/((1-v/100)*(1-w))):'—']}
+function fees(){const q=$('#fq').value.trim().toLowerCase(),c=$('#fc').value;let L=P.filter(x=>(!c||x.c==c)&&(!q||x.n.toLowerCase().includes(q)));
+ if($('#fo').value=='k')L=L.slice().sort((a,b)=>{const x=fv(a.n),y=fv(b.n);return(x===''?1e9:+x)-(y===''?1e9:+y)});
+ $('#fn').textContent=L.length+' platforms shown. '+L.filter(x=>fv(x.n)!=='').length+' have a fee filled in. For the others, type the fee from the platform page.';
+ $('#ft').innerHTML='<tr><th>Platform</th><th>Fee %</th><th class="r">You keep</th><th class="r">Price to charge to keep '+fm(N('f3'))+'</th></tr>'+L.map(x=>{const v=fv(x.n),r=frow(x.n,v);return'<tr data-n="'+esc(x.n)+'"><td><b>'+esc(x.n)+'</b><br><span class="m s">'+esc(x.c)+(FD[x.n]?' · '+esc(FD[x.n][1]):'')+'</span></td><td><input class="fv" type="number" min="0" max="100" step="0.1" value="'+esc(v)+'" placeholder="%" style="width:84px"></td><td class="r"><b class="k">'+r[0]+'</b></td><td class="r pr">'+r[1]+'</td></tr>'}).join('')}
+$('#ft').oninput=e=>{if(!e.target.classList.contains('fv'))return;const tr=e.target.closest('tr'),n=tr.dataset.n;FO[n]=e.target.value;sv2('jh_fees',JSON.stringify(FO));const r=frow(n,e.target.value);tr.querySelector('.k').textContent=r[0];tr.querySelector('.pr').textContent=r[1]};
+['f1','f2','f3','fq','fc','fo'].forEach(i=>$('#'+i).oninput=fees);$('#fc').onchange=$('#fo').onchange=fees;fees();
 /* currency */
-$('#c2').value=ld('jh_rate','')||'';
-function cur(){const r=N('c2'),a=N('c1'),c=$('#c3').value.trim()||'local';sv2('jh_rate',JSON.stringify($('#c2').value));
- $('#cl1').textContent=a+' USD in '+c;$('#co1').textContent=r?(Math.round(a*r*100)/100).toLocaleString()+' '+c:'Enter a rate';
- $('#cl2').textContent=a+' '+c+' in USD';$('#co2').textContent=r?'$'+(Math.round(a/r*100)/100).toLocaleString():'Enter a rate'}
-['c1','c2','c3'].forEach(i=>$('#'+i).oninput=cur);cur();
+let FX=null;
+const POP=['USD','EUR','GBP','BDT','INR','PKR','AED','SAR','CAD','AUD','JPY','CNY','SGD','MYR','TRY','NGN','KES','BRL','MXN','PHP'];
+let DN=null;try{DN=new Intl.DisplayNames(['en'],{type:'currency'})}catch(e){}
+const cn=c=>{try{return DN?DN.of(c):c}catch(e){return c}};
+async function fxLoad(){
+ const c=ld('jh_fx',null),now=Date.now();
+ if(c&&c.d&&c.d.time_next_update_unix&&now<c.d.time_next_update_unix*1000){FX=c.d;return}
+ try{const r=await fetch('https://open.er-api.com/v6/latest/USD'),d=await r.json();if(d.result=='success'&&d.rates){FX=d;sv2('jh_fx',JSON.stringify({t:now,d:d}));return}}catch(e){}
+ if(c&&c.d){FX=c.d;FX.stale=true}
+}
+function fxOpts(){const codes=FX?Object.keys(FX.rates).sort():POP.slice(),opt=c=>'<option value="'+c+'">'+c+' — '+esc(cn(c))+'</option>';
+ const h='<optgroup label="Popular">'+POP.filter(c=>!FX||FX.rates[c]).map(opt).join('')+'</optgroup><optgroup label="All currencies">'+codes.map(opt).join('')+'</optgroup>';
+ $('#ca').innerHTML=h;$('#cb').innerHTML=h;const s=ld('jh_fxsel',{a:'USD',b:'BDT'});$('#ca').value=s.a;$('#cb').value=s.b}
+const fxr=(a,b)=>{const o=N('c2');if(o>0)return o;if(!FX)return 0;const R=FX.rates;return R[a]&&R[b]?R[b]/R[a]:0},nf=v=>(Math.round(v*100)/100).toLocaleString(undefined,{maximumFractionDigits:2});
+function cur(){const a=$('#ca').value,b=$('#cb').value,amt=N('c1'),r=fxr(a,b);sv2('jh_fxsel',JSON.stringify({a:a,b:b}));
+ $('#cl1').textContent=nf(amt)+' '+a+' ('+cn(a)+') equals';$('#co1').textContent=r?nf(amt*r)+' '+b:'No rate yet';
+ $('#cr').textContent=r?'1 '+a+' = '+(Math.round(r*10000)/10000).toLocaleString(undefined,{maximumFractionDigits:4})+' '+b:'—';
+ $('#cu').textContent=N('c2')>0?'Your own rate':FX&&FX.time_last_update_utc?new Date(FX.time_last_update_utc).toLocaleString():'—';
+ $('#cm').textContent=N('c2')>0?'':!FX?'Could not load live rates. Check your internet, or type your own rate above.':FX.stale?'Could not refresh. These are the last saved rates, so they may be old.':'';
+ $('#cp').innerHTML=POP.filter(c=>c!=a&&(N('c2')>0?false:FX&&FX.rates[c])).map(c=>'<tr><td><b>'+c+'</b> <span class="m s">'+esc(cn(c))+'</span></td><td class="r"><b>'+nf(amt*fxr(a,c))+'</b></td></tr>').join('')||'<tr><td class="m">Live rates are needed for this list.</td></tr>';
+ const q=$('#cq').value.trim().toLowerCase();
+ $('#cx').innerHTML=FX&&!(N('c2')>0)?Object.keys(FX.rates).sort().filter(c=>c!=a&&(!q||c.toLowerCase().includes(q)||cn(c).toLowerCase().includes(q))).map(c=>'<tr><td><b>'+c+'</b> <span class="m s">'+esc(cn(c))+'</span></td><td class="r">'+nf(amt*fxr(a,c))+'</td></tr>').join(''):'';}
+['c1','c2','ca','cb','cq'].forEach(i=>$('#'+i).oninput=cur);$('#ca').onchange=$('#cb').onchange=cur;
+$('#cs').onclick=()=>{const x=$('#ca').value;$('#ca').value=$('#cb').value;$('#cb').value=x;cur()};
+fxOpts();cur();fxLoad().then(()=>{fxOpts();cur()});
 /* invoice */
 const td=new Date(),iso=d=>d.toISOString().slice(0,10);$('#i4').value=iso(td);$('#i5').value=iso(new Date(td.getTime()+7*864e5));
 function inv(){const s=$('#i6').value||'$',tx=N('i7')/100;let sub=0;
