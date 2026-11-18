@@ -173,6 +173,11 @@ const FAQ={'Getting started':[
 ['What does Client Hunter do?','It shows up to 100 more jobs that are not on the Jobs page. Tick the kind of work you want, add filters, and open company search links. It also opens the same search on many platforms.'],
 ['Can it show client emails or social profiles?','No. Platforms do not publish private contact details, and collecting them would break their rules and privacy laws. Use the messaging tools of each platform.'],
 ['Why does a platform open a Google search?','Some platforms have no reliable public search link, so Job Hunt searches that website through Google.']],
+'Tools and Dashboard':[
+['What is on the Tools page?','A rate calculator, platform fee calculator, currency converter with your own rate, invoice maker, time tracker and proposal builder.'],
+['What is on the Dashboard?','A place to track projects, payments, clients, a monthly income goal and your job applications.'],
+['Where is my Dashboard data stored?','Only in your own browser. Use Download backup on the Dashboard page to keep a copy.'],
+['What is on the Learn page?','A getting started checklist, a scam checker, skill roadmaps, message templates, guides and a glossary.']],
 'Safety':[
 ['How do I avoid scams?','Never pay to get a job. Keep chat and payment inside the platform. Be careful with gift cards, requests for bank details, and offers that seem too good.'],
 ['Does Job Hunt collect my details?','No sign-up is needed. Jobs you post are saved only in your own browser.'],
@@ -241,17 +246,25 @@ h2{display:flex;align-items:center;gap:10px}h2::before{content:"";width:5px;heig
 .ld{padding:22px;text-align:center;color:var(--gd);font-weight:600}.ld[hidden]{display:none}
 .sites{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;margin:8px 0}.sites label,.chk label{font-weight:400;display:flex;gap:6px;align-items:center;margin:0}.sites input,.chk input{width:auto}.chk{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 0}
 .res{border:1px solid var(--l);border-radius:10px;padding:10px;margin:6px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff}.res b{flex:1 1 140px}.res .btn{padding:6px 12px}
-#intro{position:fixed;inset:0;background:#0f172a;z-index:99;display:flex;align-items:center;justify-content:center;transition:opacity .6s}#intro.out{opacity:0;pointer-events:none}
-#intro .ib{text-align:center;color:#fff;animation:pop .9s ease both}#intro img{width:84px;height:84px;border-radius:20px;object-fit:cover;background:#0f172a;box-shadow:0 0 0 6px rgba(16,185,129,.25)}#intro h2{display:block;margin:14px 0 4px;color:#fff;font-size:2.2rem}#intro h2::before{display:none}#intro b{color:#34d399}#intro p{color:#cbd5e1}
-#intro i{display:block;height:4px;width:180px;margin:18px auto 0;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;position:relative}#intro i::after{content:"";position:absolute;inset:0;background:var(--g);transform:translateX(-100%);animation:ldb 1.5s ease forwards}
-@keyframes pop{from{opacity:0;transform:scale(.85) translateY(10px)}}@keyframes ldb{to{transform:none}}`;
+#intro{position:fixed;inset:0;z-index:99;background:radial-gradient(circle at 50% 38%,#ecfdf5 0%,#ffffff 62%);display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,transform .6s ease}
+#intro.out{opacity:0;transform:translateY(-14px);pointer-events:none}
+#intro .ib{text-align:center;padding:0 20px}
+#intro .lg{position:relative;width:96px;height:96px;margin:0 auto 20px;border-radius:26px;background:#fff;box-shadow:0 12px 32px rgba(16,185,129,.28);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:2rem;color:#059669;animation:pop .7s cubic-bezier(.2,.9,.3,1.2) both}
+#intro .lg::before,#intro .lg::after{content:"";position:absolute;inset:-8px;border-radius:32px;border:2px solid rgba(16,185,129,.4);animation:ring 1.8s ease-out infinite}
+#intro .lg::after{animation-delay:.9s}
+#intro .lg img{width:74px;height:74px;border-radius:18px;object-fit:cover}
+#intro h2{display:block;margin:0 0 6px;color:#0f172a;font-size:2.5rem;letter-spacing:-1px;animation:fup .7s .25s both}#intro h2::before{display:none}#intro h2 b{color:#059669}
+#intro p{color:#475569;font-size:1.05rem;animation:fup .7s .45s both}
+#intro .pb{width:200px;height:4px;background:#d1fae5;border-radius:4px;margin:24px auto 0;overflow:hidden}
+#intro .pb i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#10b981,#34d399);transform:translateX(-100%);animation:ldb 1.7s .2s ease forwards}
+@keyframes pop{from{opacity:0;transform:scale(.8)}}@keyframes fup{from{opacity:0;transform:translateY(12px)}}@keyframes ring{from{opacity:.8;transform:scale(.92)}to{opacity:0;transform:scale(1.3)}}@keyframes ldb{to{transform:none}}`;
 document.addEventListener('DOMContentLoaded',()=>{
-  try{if(!sessionStorage.getItem('jh_i')&&!matchMedia('(prefers-reduced-motion:reduce)').matches){sessionStorage.setItem('jh_i','1');document.body.insertAdjacentHTML('afterbegin','<div id="intro"><div class="ib"><img src="logo.png" alt="" onerror="this.style.display=\'none\'"><h2>Job <b>Hunt</b></h2><p>Find your next freelance job</p><i></i></div></div>');setTimeout(()=>{const e=document.getElementById('intro');if(!e)return;e.classList.add('out');setTimeout(()=>e.remove(),600)},1700)}}catch(e){}
+  try{if(!sessionStorage.getItem('jh_i')&&!matchMedia('(prefers-reduced-motion:reduce)').matches){sessionStorage.setItem('jh_i','1');document.body.insertAdjacentHTML('afterbegin','<div id="intro"><div class="ib"><div class="lg"><img src="logo.png" alt="" onerror="this.parentNode.textContent=\'JH\'"></div><h2>Job <b>Hunt</b></h2><p>Find your next freelance job</p><div class="pb"><i></i></div></div></div>');setTimeout(()=>{const e=document.getElementById('intro');if(!e)return;e.classList.add('out');setTimeout(()=>e.remove(),600)},2100)}}catch(e){}
   const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
   const ic=document.createElement('link');ic.rel='icon';ic.href='logo.png';document.head.appendChild(ic);
   const fc=document.createElement('script');fc.async=true;fc.src='https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1';document.head.appendChild(fc);
   (function sg(){if(!window.frames['googlefcPresent']){if(document.body){const f=document.createElement('iframe');f.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none';f.name='googlefcPresent';document.body.appendChild(f)}else setTimeout(sg,0)}})();
-  const pg=document.body.dataset.page,L=[['home','index.html','Jobs'],['plat','platforms.html','Platforms'],['hunt','client-hunter.html','Client Hunter']];
+  const pg=document.body.dataset.page,L=[['home','index.html','Jobs'],['plat','platforms.html','Platforms'],['hunt','client-hunter.html','Client Hunter'],['tools','tools.html','Tools'],['dash','dashboard.html','Dashboard'],['learn','learn.html','Learn']];
   document.body.insertAdjacentHTML('afterbegin',`<header><div class="wrap"><a class="logo" href="index.html"><img src="logo.png" alt="" onerror="this.style.display='none'">Job <b>Hunt</b></a><nav>${L.map(x=>`<a href="${x[1]}" class="${pg==x[0]?'on':''}">${x[2]}</a>`).join('')}</nav><span class="badge">${P.length} Platforms</span></div></header>`);
   if(document.body.dataset.t)document.querySelector('header').insertAdjacentHTML('afterend',`<section class="hero sm"><div class="wrap"><h1>${esc(document.body.dataset.t)}</h1><p>${esc(document.body.dataset.d||'')}</p></div></section>`);
   document.body.insertAdjacentHTML('beforeend',`<footer><div class="wrap"><p>Job Hunt shows live listings from <a href="https://jobicy.com" target="_blank" rel="noopener noreferrer">Jobicy</a>, <a href="https://remoteok.com" target="_blank" rel="noopener noreferrer">Remote OK</a> and <a href="https://www.arbeitnow.com" target="_blank" rel="noopener noreferrer">Arbeitnow</a>, refreshed every hour, and links to ${P.length} freelance and job platforms. Every button opens the original job page. Job Hunt is not affiliated with these websites.</p><p><a href="privacy.html">Privacy Policy</a>${CONTACT?` · <a href="mailto:${CONTACT}">Contact</a>`:''}</p></div></footer>`);
