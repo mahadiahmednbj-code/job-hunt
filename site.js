@@ -258,9 +258,19 @@ h2{display:flex;align-items:center;gap:10px}h2::before{content:"";width:5px;heig
 #intro .pb{width:200px;height:4px;background:#d1fae5;border-radius:4px;margin:24px auto 0;overflow:hidden}
 #intro .pb i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#10b981,#34d399);transform:translateX(-100%);animation:ldb 1.7s .2s ease forwards}
 @keyframes pop{from{opacity:0;transform:scale(.8)}}@keyframes fup{from{opacity:0;transform:translateY(12px)}}@keyframes ring{from{opacity:.8;transform:scale(.92)}to{opacity:0;transform:scale(1.3)}}@keyframes ldb{to{transform:none}}`;
+(function(){
+ const st=document.createElement('style');st.textContent=CSS+'html.jh-i{background:#fff}html.jh-i body>*:not(#intro){visibility:hidden}';(document.head||document.documentElement).appendChild(st);
+ let want=false;try{want=!sessionStorage.getItem('jh_i')&&!matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){}
+ if(!want)return;
+ try{sessionStorage.setItem('jh_i','1')}catch(e){}
+ const H='<div id="intro"><div class="ib"><div class="lg"><img src="logo.png" alt="" onerror="this.parentNode.textContent=\'JH\'"></div><h2>Job <b>Hunt</b></h2><p>Find your next freelance job</p><div class="pb"><i></i></div></div></div>',R=document.documentElement;
+ R.classList.add('jh-i');setTimeout(()=>R.classList.remove('jh-i'),4500);
+ let done=false;
+ const mk=()=>{if(done||!document.body)return;done=true;document.body.insertAdjacentHTML('afterbegin',H);setTimeout(()=>{const e=document.getElementById('intro');R.classList.remove('jh-i');if(!e)return;e.classList.add('out');setTimeout(()=>e.remove(),600)},2100)};
+ mk();if(!done){const mo=new MutationObserver(()=>{mk();if(done)mo.disconnect()});mo.observe(R,{childList:true,subtree:true})}
+})();
 document.addEventListener('DOMContentLoaded',()=>{
-  try{if(!sessionStorage.getItem('jh_i')&&!matchMedia('(prefers-reduced-motion:reduce)').matches){sessionStorage.setItem('jh_i','1');document.body.insertAdjacentHTML('afterbegin','<div id="intro"><div class="ib"><div class="lg"><img src="logo.png" alt="" onerror="this.parentNode.textContent=\'JH\'"></div><h2>Job <b>Hunt</b></h2><p>Find your next freelance job</p><div class="pb"><i></i></div></div></div>');setTimeout(()=>{const e=document.getElementById('intro');if(!e)return;e.classList.add('out');setTimeout(()=>e.remove(),600)},2100)}}catch(e){}
-  const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+  
   const ic=document.createElement('link');ic.rel='icon';ic.href='logo.png';document.head.appendChild(ic);
   const fc=document.createElement('script');fc.async=true;fc.src='https://fundingchoicesmessages.google.com/i/pub-4306254455862264?ers=1';document.head.appendChild(fc);
   (function sg(){if(!window.frames['googlefcPresent']){if(document.body){const f=document.createElement('iframe');f.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none';f.name='googlefcPresent';document.body.appendChild(f)}else setTimeout(sg,0)}})();
