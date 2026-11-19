@@ -4,7 +4,7 @@
 <form id="sf" class="gs"><input id="q" placeholder="Search skills (e.g. Video Editing, Thumbnail, Web Design)..." aria-label="Skill"><span class="dv"></span><select id="ps" aria-label="Where to search"></select><button class="btn">Search Jobs ↗</button></form>
 <div class="tr"><span>Trending:</span><button type="button">Video Editing</button><button type="button">Thumbnail</button><button type="button">Reels</button><button type="button">Web Development</button><button type="button">SEO</button><button type="button">Graphic Design</button></div></div></section>
 <div class="wrap"><div data-ad="banner"></div></div>
-<main class="wrap"><h2 id="jobs">Live Jobs</h2><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="m">My Jobs</button><button data-t="n">Post a Job</button></div>
+<main class="wrap"><h2 id="jobs">Live Jobs</h2><div class="tabs" role="tablist"><button class="on" data-t="a">Direct Apply</button><button data-t="p">Job Posts</button><button data-t="s">All Sites</button><button data-t="m">My Jobs</button><button data-t="n">Post a Job</button></div>
 <div id="fb" class="row"><select id="ft" aria-label="Job type"><option value="">Any job type</option><option value="fulltime">Full time</option><option value="parttime">Part time</option><option value="contract">Contract</option><option value="freelance">Freelance</option><option value="internship">Internship</option></select><select id="so" aria-label="Sort"><option value="">Default order</option><option value="new">Newest first</option></select><label style="display:flex;gap:6px;align-items:center;font-weight:400"><input id="fp" type="checkbox" style="width:auto"> Only jobs with pay listed</label></div>
 <div id="st" class="note" aria-live="polite">Loading jobs...</div><div id="out" class="grid"></div><div data-ad="feed"></div>
 <div id="mj" hidden><button class="btn o" id="csv" type="button">Download my jobs (CSV)</button></div>
@@ -16,10 +16,11 @@
 <div class="row"><div><label for="pu">How to contact you (link or email)</label><input id="pu"></div></div>
 <label>Where do you want to post? <button type="button" class="btn o" id="all" style="padding:3px 10px;margin-left:8px">Select all</button></label><div class="sites" id="sites"></div>
 <p class="m s" style="margin:8px 0">Other websites do not let us fill their forms. You get one ready text to copy, plus a button that opens each site. The post is also kept on this device.</p><button class="btn">Create my job post</button></form>
+<div id="sw" hidden><p class="note">Upwork, Fiverr, LinkedIn and most other big sites do not share their job lists with other websites. So Job Hunt opens their own live results for your skill. Type your skill in the search bar at the top.</p><div class="row"><div><label for="sc2">Category</label><select id="sc2"><option value="">All categories</option></select></div></div><div id="sg" class="grid"></div></div>
 <div id="pr" hidden></div>
 <div data-ad="article"></div></main>
 <script>
-let tab='a',D=[],Pst=[],err='',U=0;
+let tab='a',D=[],Pst=[],err='',U=0,LIM=120;
 const SITES=['Upwork','Fiverr','Freelancer.com','PeoplePerHour','Guru','Truelancer','Workana','Toptal','99designs','DesignCrowd','crowdSPRING','Behance Jobs','Dribbble Jobs','Indeed','LinkedIn Jobs','We Work Remotely','RemoteOK','ProBlogger Jobs','Contra'];
 $('#ps').innerHTML='<option value="live">Live jobs on Job Hunt</option>'+P.map((p,i)=>'<option value="'+i+'">'+esc(p.n)+'</option>').join('');
 $('#sites').innerHTML=SITES.map(n=>'<label><input type="checkbox" value="'+esc(n)+'"> '+esc(n)+'</label>').join('');
@@ -27,27 +28,33 @@ const mine=()=>{try{return JSON.parse(localStorage.getItem('jh_posts')||'[]')}ca
 const cu=u=>!u?'#':/^[\w.+-]+@[\w.-]+$/.test(u)?'mailto:'+u:(/^https?:/.test(u)?u:'https://'+u);
 const dtv=j=>Date.parse(String(j.dt||'').replace(' ','T'))||0;
 function draw(){
- const T=tab;$('#pf').hidden=T!='n';$('#out').hidden=T=='n';$('#st').hidden=T=='n';$('#fb').hidden=(T=='n'||T=='m');$('#mj').hidden=T!='m';if(T!='n')$('#pr').hidden=true;
+ const T=tab,S=T=='s';$('#sw').hidden=!S;$('#pf').hidden=T!='n';$('#out').hidden=(T=='n'||S);$('#st').hidden=(T=='n'||S);$('#fb').hidden=(T=='n'||T=='m'||S);$('#mj').hidden=T!='m';if(T!='n')$('#pr').hidden=true;
+ if(S){sites();return}
  if(T=='n')return;
  const q=$('#q').value.trim();let L,m=T;
  if(T=='a')L=D;else if(T=='p')L=mine().map(x=>({t:x.t,c:x.c,l:'Posted on this device',cat:x.k||'',s:x.b,u:cu(x.u),y:'',d:x.d||'',src:'this site',dt:''})).concat(Pst);
  else{L=Object.values(getSaved()).sort((a,b)=>b.t-a.t).map(x=>x.j);m='a'}
  L=filterQ(L,q);
  if(T!='m'){const ft=$('#ft').value;if(ft)L=L.filter(j=>(j.y||'').toLowerCase().replace(/[^a-z]/g,'').includes(ft));if($('#fp').checked)L=L.filter(j=>j.s);if($('#so').value=='new')L=L.slice().sort((a,b)=>dtv(b)-dtv(a))}
- $('#out').innerHTML=L.map(j=>jobCard(j,m)).join('');
+ $('#out').innerHTML=L.slice(0,LIM).map(j=>jobCard(j,m)).join('')+(L.length>LIM?'<button class="btn o" id="mr" style="grid-column:1/-1">Show more ('+(L.length-LIM)+' more jobs)</button>':'');
  $('#st').textContent=err||(T=='m'?(L.length?L.length+' saved or applied jobs (kept on this device)':'No saved jobs yet. Press Save or Mark applied on any job.'):L.length+' jobs shown · '+ago(U)+' · refreshes every hour');
 }
+const TOP=['Upwork','Fiverr','LinkedIn Jobs','Freelancer.com','Indeed','PeoplePerHour','Guru','Toptal','Glassdoor','We Work Remotely','RemoteOK','Behance Jobs','Dribbble Jobs'];
+CATS.forEach(c=>$('#sc2').insertAdjacentHTML('beforeend','<option>'+esc(c)+'</option>'));$('#sc2').onchange=()=>sites();
+function sites(){const q=$('#q').value.trim(),c=$('#sc2').value,rk=n=>{const k=TOP.indexOf(n);return k<0?99:k};
+ $('#sg').innerHTML=P.filter(p=>!c||p.c==c).sort((a,b)=>rk(a.n)-rk(b.n)).map(p=>'<article class="card"><h3>'+esc(p.n)+'</h3><p><span class="tag">'+esc(p.c)+'</span></p><p class="m s">'+(q?'Live results for "'+esc(q)+'" on '+esc(p.n):'Browse jobs on '+esc(p.n))+'</p><a class="btn" href="'+esc(searchUrl(p,q))+'" target="_blank" rel="noopener noreferrer">Open on '+esc(p.n)+' ↗</a></article>').join('')}
 function onSaved(){if(tab=='m')draw()}
 async function load(){
  err='';
  try{const d=await jobsData();D=d.direct;Pst=d.posts;U=d.updated}catch(e){D=[];Pst=[];err='Could not load jobs. Check your internet and try again.'}
  draw();
 }
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;draw()});
-['ft','so','fp'].forEach(i=>$('#'+i).addEventListener('change',draw));
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;LIM=120;draw()});
+$('#out').onclick=e=>{if(e.target.id=='mr'){LIM+=120;draw()}};
+['ft','so','fp'].forEach(i=>$('#'+i).addEventListener('change',()=>{LIM=120;draw()}));
 function go(){const v=$('#ps').value,q=$('#q').value.trim();if(v==='live'){draw();$('#jobs').scrollIntoView({behavior:'smooth'})}else window.open(searchUrl(P[+v],q||'freelance'),'_blank','noopener,noreferrer')}
 $('#sf').onsubmit=e=>{e.preventDefault();go()};
-$('#q').addEventListener('input',()=>{if($('#ps').value==='live')draw()});
+$('#q').addEventListener('input',()=>{LIM=120;if($('#ps').value==='live')draw()});
 document.querySelectorAll('.tr button').forEach(b=>b.onclick=()=>{$('#q').value=b.textContent;$('#ps').value='live';go()});
 $('#all').onclick=()=>{const c=[...document.querySelectorAll('#sites input')],on=c.some(x=>!x.checked);c.forEach(x=>x.checked=on);$('#all').textContent=on?'Clear all':'Select all'};
 $('#csv').onclick=()=>{const R=[['Title','Company','Location','Source','Status','Link']].concat(Object.values(getSaved()).map(x=>[x.j.t,x.j.c,x.j.l,x.j.src,x.st,x.j.u]));
