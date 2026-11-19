@@ -14,6 +14,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: python fetch_jobs.py
+        env:
+          ADZUNA_ID: ${{ secrets.ADZUNA_ID }}
+          ADZUNA_KEY: ${{ secrets.ADZUNA_KEY }}
+          JOOBLE_KEY: ${{ secrets.JOOBLE_KEY }}
       - run: |
           git config user.name "jobs-bot"
           git config user.email "jobs-bot@users.noreply.github.com"
